@@ -1,20 +1,29 @@
 import "./App.css";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography,Box,Container } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Refresh } from "@mui/icons-material";
-import { makeStyles } from "@mui/material";
+import {styled} from "@mui/material"
+import Navbar from "./components/NavBar";
+
+
+const BotonPersonalizado = styled(Button)({
+  color: "white",
+  background: "linear-gradient(to right bottom, #a594f9, #e5d9f2)",
+  borderRadius:50,
+});
+
 
 const theme = createTheme({
   palette: {
     primary: {
       light: "#757ce8",
-      main: "#9381ff",
+      main: "#cdc1ff",
       dark: "#002884",
       contrastText: "#fff",
     },
     secondary: {
       light: "#ff7961",
-      main: "#9381ff",
+      main: "#a594f9",
       dark: "pink",
       contrastText: "#fff",
     },
@@ -30,18 +39,30 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App" style={{ backgroundColor: "#f8f7ff" }}>
-        <Button color="secondary" variant="contained" disableElevation>
-          <Refresh />
-          Refresh
-        </Button>
-        <Typography variant="h1" color="initial">
-          aasdfa
-        </Typography>
-        <Button className="prueba" variant="contained" color="secondary">
-          personalizado
-        </Button>
-      </div>
+      <Navbar/>
+      
+      <Box sx={
+        {offset: theme.mixins.toolbar}
+      }>
+        <div className="App" style={{ backgroundColor: "#f5efff" }}>
+          <Button color="secondary" variant="contained" disableElevation>
+            <Refresh />
+            Refresh
+          </Button>
+          <Typography variant="h1" color="initial">
+            aasdfa
+          </Typography>
+          <Button
+            sx={{
+              color: "white",
+              background: "linear-gradient(to right bottom, #a594f9, #e5d9f2)",
+            }}
+          >
+            personalizado
+          </Button>
+          <BotonPersonalizado>hola</BotonPersonalizado>
+        </div>
+      </Box>
     </ThemeProvider>
   );
 }
