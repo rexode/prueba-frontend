@@ -4,6 +4,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Refresh } from "@mui/icons-material";
 import { styled } from "@mui/material";
 import Navbar from "./components/NavBar";
+import Entrance from "./components/Entrance";
+import History from "./components/History";
+
 
 const BotonPersonalizado = styled(Button)({
   color: "white",
@@ -29,36 +32,30 @@ const theme = createTheme({
       default: "#f8f7ff",
     },
   },
-  shape: {
-    borderRadius: 50,
-  },
+  
 });
 
 function App() {
   return (
+    
     <ThemeProvider theme={theme}>
+      <div className="App" style={{ backgroundColor: "#f5efff" }}>
       <Navbar />
-
+      <Entrance/>
       <Box sx={{ offset: theme.mixins.toolbar }}>
-        <div className="App" style={{ backgroundColor: "#f5efff" }}>
-          <Button color="secondary" variant="contained" disableElevation>
+          <BotonPersonalizado color="secondary" variant="contained" disableElevation>
             <Refresh />
             Refresh
-          </Button>
-          <Typography variant="h1" color="initial">
-            aasdfa
-          </Typography>
-          <Button
-            sx={{
-              color: "white",
-              background: "linear-gradient(to right bottom, #a594f9, #e5d9f2)",
-            }}
-          >
+          </BotonPersonalizado>
+
+          <BotonPersonalizado>
             personalizado
-          </Button>
+          </BotonPersonalizado>
           <BotonPersonalizado>hola</BotonPersonalizado>
+          </Box>
+          <History/>
         </div>
-      </Box>
+      
     </ThemeProvider>
   );
 }
