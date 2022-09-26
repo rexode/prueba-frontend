@@ -11,6 +11,13 @@ import { useEffect, useState } from "react";
 
 import { Box } from "@mui/system";
 import React from "react";
+import App from "../App";
+
+const NavbarPersonalizada = styled(AppBar)({
+  color: "white",
+  background: "linear-gradient(to right bottom, #4e54c8, #8f94fb)",
+});
+
 export default function Navbar (){
   const [account, setAccount] = useState(null);
   const [provider, setProvider] = useState(null);
@@ -34,7 +41,7 @@ export default function Navbar (){
   }, []);
   return (
     <Box >
-      <AppBar elevation={0} position="static">
+      <NavbarPersonalizada elevation={0} position="static">
         <Toolbar>
           <Box sx={{flexDirection: 'row',display:"flex",flexGrow: 1}}>
           <IconButton sx={{ color: "white" }}>
@@ -75,7 +82,7 @@ export default function Navbar (){
           <Typography>...{account.substring(account.length - 7)}</Typography>
         )}  
         </Toolbar>
-      </AppBar>
+      </NavbarPersonalizada>
     </Box>
   );
 };

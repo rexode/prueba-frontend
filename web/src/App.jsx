@@ -10,7 +10,7 @@ import History from "./components/History";
 
 const BotonPersonalizado = styled(Button)({
   color: "white",
-  background: "linear-gradient(to right bottom, #a594f9, #e5d9f2)",
+  background: "linear-gradient(to right bottom, #4e54c8, #8f94fb)",
   borderRadius: 50,
 });
 
@@ -40,21 +40,10 @@ function App() {
     
     <ThemeProvider theme={theme}>
       <div className="App" style={{ backgroundColor: "#f5efff" }}>
-      <Navbar />
-      <Entrance/>
-      <Box sx={{ offset: theme.mixins.toolbar }}>
-          <BotonPersonalizado color="secondary" variant="contained" disableElevation>
-            <Refresh />
-            Refresh
-          </BotonPersonalizado>
-
-          <BotonPersonalizado>
-            personalizado
-          </BotonPersonalizado>
-          <BotonPersonalizado>hola</BotonPersonalizado>
-          </Box>
-          <History/>
-        </div>
+        <Navbar />
+        <Entrance/>
+        <History/>
+      </div>
       
     </ThemeProvider>
   );
