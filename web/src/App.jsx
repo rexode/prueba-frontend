@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect, useState } from "react";
 import { Button, Typography, Box, Container } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Refresh } from "@mui/icons-material";
@@ -6,7 +7,7 @@ import { styled } from "@mui/material";
 import Navbar from "./components/NavBar";
 import Entrance from "./components/Entrance";
 import History from "./components/History";
-
+import Lottery from "./components/Lottery";
 
 const BotonPersonalizado = styled(Button)({
   color: "white",
@@ -32,19 +33,19 @@ const theme = createTheme({
       default: "#f8f7ff",
     },
   },
-  
 });
 
 function App() {
+  const [account, setAccount] = useState(null);
+  const [provider, setProvider] = useState(null);
   return (
-    
     <ThemeProvider theme={theme}>
       <div className="App" style={{ backgroundColor: "#f5efff" }}>
-        <Navbar />
-        <Entrance/>
-        <History/>
+        <Navbar/>
+        <Entrance />
+        <History />
+        <Lottery />
       </div>
-      
     </ThemeProvider>
   );
 }

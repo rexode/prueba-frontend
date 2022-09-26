@@ -11,7 +11,7 @@ const BotonPersonalizado = styled(Button)({
 const Entrance = ()=>{
 
 return(
-<Paper elevation={0} sx={{backgroundImage: `url(${imageBackground})`}} variant="outlined" square>
+<Paper elevation={0} sx={{backgroundImage: `url(${imageBackground})`,marginTop:2}} variant="outlined" square >
 <Box>
 <Typography variant="h1">Easy To</Typography>
 <Typography variant="h1">Win</Typography>
