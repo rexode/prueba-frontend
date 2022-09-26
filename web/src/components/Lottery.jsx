@@ -15,22 +15,28 @@ export default function Lottery() {
   const [PrizePerWinner, setPrizePerWinner] = useState("Refresh");
   const [MaxTicketsPlayers, setMaxTicketsPlayers] = useState("Refresh");
   const [CostTicket, setCostTicket] = useState("Refresh");
+  const [buttonState, setButtonState] = useState("loaded");
+
   const Aeth = 10 ** 18;
 
   const getInfoContract = async () => {
+    setButtonState("loading");
     const contract = new ethers.Contract(
-      "0x99C60f65116f63a06F84113c40A769C067D7FBd2",
+      "0x97a3e38711404202Fc432555aC8c33FFE78558d1",
       abi,
       provider
     );
-
+    const temMaxTicketsPerPlayer = await contract.maxTicketsPlayer();
+    console.log(temMaxTicketsPerPlayer.toString());
+    setMaxTicketsPlayers(parseInt(temMaxTicketsPerPlayer));
+    
     const temTotalTicket = await contract.totalTickets();
     console.log(temTotalTicket.toString());
-    setTotalTickets(temTotalTicket);
+    setTotalTickets(parseInt(temTotalTicket));
 
     const temNwinners = await contract.Nwinners();
     console.log(temNwinners.toString());
-    setNwinners(temNwinners);
+    setNwinners(parseInt(temNwinners));
 
     const temCost = (await contract.costTicket()) / Aeth;
     console.log(temCost.toString());
@@ -42,18 +48,16 @@ export default function Lottery() {
 
     const temPrizePerWinner = (await contract.prizePerwinner()) / Aeth;
     console.log(temPrizePerWinner.toString());
-    setPrizePerWinner(temPrizePerWinner);
+    setPrizePerWinner(temPrizePerWinner.toString());
 
     const temMaxTickets = await contract.maxTickets();
     console.log(temMaxTickets.toString());
-    setMaxTickets(temMaxTickets);
+    setMaxTickets(parseInt(temMaxTickets));
 
-    const temMaxTicketsPerPlayer = await contract.maxTicketsPlayer();
-    console.log(temMaxTicketsPerPlayer.toString());
-    setMaxTicketsPlayers(temMaxTicketsPerPlayer);
+    
+    setButtonState("loaded");
   };
-  
-  
+
   const prueba = () => {
     console.log(TotalTickets.toString());
     console.log(Nwinners.toString());
@@ -88,21 +92,30 @@ export default function Lottery() {
         <Button onClick={initConnection}>Conectar</Button>
       ) : (
         <Box>
-          <Button onClick={async () => {await getInfoContract;}}>
+          <Button
+            onClick={getInfoContract}
+            disabled={buttonState === "loading"}
+          >
             <Refresh />
-            Refresh
+            {buttonState === "loaded" ? "Refresh" : "Fetching..."}
           </Button>
-          <Button onClick={prueba}></Button>
-          <Box>
-            <Typography>{account}</Typography>
-            <Typography>{Nwinners}</Typography>
-            <Typography>{CostTicket}</Typography>
-            <Typography>{Prize}</Typography>
-            <Typography>{PrizePerWinner}</Typography>
-            <Typography>{MaxTickets}</Typography>
-            <Typography>{TotalTickets.toString}</Typography>
-            <Typography>{MaxTicketsPlayers}</Typography>
-          </Box>
+          {buttonState === "loaded" ? (
+            
+            <Box>
+                <>{prueba()}</>
+                
+              <Typography>{account}</Typography>
+              <Typography>{Nwinners}</Typography>
+              <Typography>{CostTicket}</Typography>
+              <Typography>{Prize}</Typography>
+              <Typography>{PrizePerWinner}</Typography>
+              <Typography>{MaxTickets}</Typography>
+              <Typography>{TotalTickets}</Typography>
+              <Typography>{MaxTicketsPlayers}</Typography>
+            </Box>
+          ) : ( <></>
+          )}
+          <Box></Box>
         </Box>
       )}
     </Box>
