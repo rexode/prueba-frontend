@@ -5,9 +5,7 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Refresh } from "@mui/icons-material";
 import abi from "../abi/abi.json";
-export default function Lottery() {
-  const [account, setAccount] = useState("Refresh");
-  const [provider, setProvider] = useState("Refresh");
+export default function Lottery(props) {
   const [Nwinners, setNwinners] = useState("Refresh");
   const [Prize, setPrize] = useState("Refresh");
   const [MaxTickets, setMaxTickets] = useState("Refresh");
@@ -16,7 +14,7 @@ export default function Lottery() {
   const [MaxTicketsPlayers, setMaxTicketsPlayers] = useState("Refresh");
   const [CostTicket, setCostTicket] = useState("Refresh");
   const [buttonState, setButtonState] = useState("loaded");
-
+  const{account,provider}=props;
   const Aeth = 10 ** 18;
 
   const getInfoContract = async () => {
@@ -67,29 +65,13 @@ export default function Lottery() {
     console.log(MaxTickets.toString());
     console.log(MaxTicketsPlayers.toString());
   };
-  const initConnection = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      console.log("good");
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(tempProvider);
-      console.log(provider);
-      setAccount(accounts[0]);
-    } else {
-      console.log("install metamask");
-    }
-  };
 
-  useEffect(() => {
-    initConnection();
-  }, []);
 
+  
   return (
     <Box>
       {account == null ? (
-        <Button onClick={initConnection}>Conectar</Button>
+        <Typography>Connect to the blockchain</Typography>
       ) : (
         <Box>
           <Button

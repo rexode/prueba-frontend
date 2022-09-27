@@ -18,28 +18,14 @@ const NavbarPersonalizada = styled(AppBar)({
   background: "linear-gradient(to right bottom, #4e54c8, #8f94fb)",
 });
 
-export default function Navbar() {
-  const [account, setAccount] = useState(null);
+
+export default function Navbar(props) {
   const [provider, setProvider] = useState(null);
-  const initConnection = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      console.log("good");
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(tempProvider);
-      console.log(provider);
-      setAccount(accounts[0]);
-    } else {
-      console.log("install metamask");
-    }
-  };
+  const{initConnection,account}=props;
+
+
   const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
-  useEffect(() => {
-    initConnection();
-  }, []);
   return (
     <Box>
       <NavbarPersonalizada elevation={0} position="fixed">
@@ -82,9 +68,7 @@ export default function Navbar() {
             >
               <Typography fontSize={16}>Log-in</Typography>
             </Button>
-            
           ) : (
-            
             <Typography>...{account.substring(account.length - 7)}</Typography>
           )}
         </Toolbar>
@@ -92,4 +76,4 @@ export default function Navbar() {
       <Offset />
     </Box>
   );
-};
+}
