@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Button, Typography, Box, Container, Toolbar } from "@mui/material";
+import { Button, Typography, Box, Container, Toolbar, Card } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Refresh } from "@mui/icons-material";
 import { styled } from "@mui/material";
@@ -79,7 +79,11 @@ function App() {
         ></Toolbar>
         <History />
         <Lottery account={account} provider={provider} />
+        <Box sx={{background:'linear-gradient(to bottom right, #fe6b8b 30%, #ff8e53 90%)', width: 1,
+        height: 300}}></Box>
       </div>
+
+
     </ThemeProvider>
   );
 }
