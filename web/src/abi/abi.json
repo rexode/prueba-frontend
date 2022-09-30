@@ -15,13 +15,6 @@
     "type": "error"
   },
   {
-    "inputs": [],
-    "name": "NRandNum",
-    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "NTicketsOwner",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -29,9 +22,19 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "Nwinners",
     "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "PercentageWinners",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -43,7 +46,10 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
     "name": "WithdrawWinners",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
@@ -94,6 +100,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "idGame",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "uint256", "name": "tickets", "type": "uint256" }
     ],
@@ -117,15 +130,15 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "prize",
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "pool",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "prizePerwinner",
+    "name": "prize",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
@@ -173,6 +186,26 @@
     "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "uint256", "name": "_Nwinners", "type": "uint256" },
+      { "internalType": "uint256", "name": "_place", "type": "uint256" },
+      { "internalType": "uint256", "name": "_percentage", "type": "uint256" }
+    ],
+    "name": "setPercentageWinners",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_percentage", "type": "uint256" }
+    ],
+    "name": "setPercentageWithdrawals",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "setWinners",
     "outputs": [],
@@ -187,7 +220,10 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
     "name": "winners",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
@@ -201,7 +237,9 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      { "internalType": "uint256", "name": "_idGame", "type": "uint256" }
+    ],
     "name": "withdrawByWinner",
     "outputs": [],
     "stateMutability": "nonpayable",

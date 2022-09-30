@@ -8,6 +8,7 @@ import Navbar from "./components/NavBar";
 import Entrance from "./components/Entrance";
 import History from "./components/History";
 import Lottery from "./components/Lottery";
+import Results from "./components/Results";
 import { ethers } from "ethers";
 
 
@@ -79,6 +80,7 @@ function App() {
         ></Toolbar>
         <History />
         <Lottery account={account} provider={provider} />
+        <Results account={account} provider={provider}/>
         <Box sx={{background:'linear-gradient(to bottom right, #fe6b8b 30%, #ff8e53 90%)', width: 1,
         height: 300}}></Box>
       </div>

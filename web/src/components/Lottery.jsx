@@ -1,23 +1,26 @@
 import React from "react";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { Button, Typography, Card, Grid } from "@mui/material";
+import { Button, Typography, Card, Grid, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import { Refresh } from "@mui/icons-material";
 import abi from "../abi/abi.json";
 import { styled } from "@mui/material";
+import { useTry, useTryAsync } from "no-try";
 
 export default function Lottery(props) {
   const [Nwinners, setNwinners] = useState("Refresh");
   const [Prize, setPrize] = useState("Refresh");
   const [MaxTickets, setMaxTickets] = useState("Refresh");
   const [TicktetsLeft, setTicktetsLeft] = useState("Refresh");
-  const [PrizePerWinner, setPrizePerWinner] = useState("Refresh");
   const [MaxTicketsPlayers, setMaxTicketsPlayers] = useState("Refresh");
   const [CostTicket, setCostTicket] = useState("Refresh");
+  const [IdGame, setIdGame] = useState("Refresh");
   const [buttonState, setButtonState] = useState("loaded");
   const [active, setActive] = useState(false);
   const { account, provider } = props;
+  const [ error, setError ] = useState("succesfull");
+  const [ ifError, setIfError ] = useState(false);
 
   const Aeth = 10 ** 18;
 
@@ -31,16 +34,19 @@ export default function Lottery(props) {
   const getInfoContract = async () => {
     setButtonState("loading");
     const contract = new ethers.Contract(
-      "0x97a3e38711404202Fc432555aC8c33FFE78558d1",
+      "0x925463A53124b23B5162ad1C3dCffcBcd6BEE040",
       abi,
       provider
     );
+    const temIdGame = await contract.idGame();
+    console.log(temIdGame.toString());
+    setIdGame(parseInt(temIdGame));
+
     const temMaxTicketsPerPlayer = await contract.maxTicketsPlayer();
     console.log(temMaxTicketsPerPlayer.toString());
     setMaxTicketsPlayers(parseInt(temMaxTicketsPerPlayer));
 
-
-    const temNwinners = await contract.Nwinners();
+    const temNwinners = await contract.Nwinners(temIdGame);
     console.log(temNwinners.toString());
     setNwinners(parseInt(temNwinners));
 
@@ -52,18 +58,13 @@ export default function Lottery(props) {
     console.log(temPrize.toString());
     setPrize(temPrize);
 
-    const temPrizePerWinner = (await contract.prizePerwinner()) / Aeth;
-    console.log(temPrizePerWinner.toString());
-    setPrizePerWinner(temPrizePerWinner.toString());
-
     const temMaxTickets = await contract.maxTickets();
     console.log(temMaxTickets.toString());
     setMaxTickets(parseInt(temMaxTickets));
 
     const temTotalTicket = await contract.totalTickets();
-    console.log(parseInt(temMaxTickets)-parseInt(temTotalTicket));
-    setTicktetsLeft(parseInt(temMaxTickets)-parseInt(temTotalTicket));
-
+    console.log(parseInt(temMaxTickets) - parseInt(temTotalTicket));
+    setTicktetsLeft(parseInt(temMaxTickets) - parseInt(temTotalTicket));
 
     const temActive = await contract.active();
     console.log(temActive.toString());
@@ -77,12 +78,29 @@ export default function Lottery(props) {
     console.log(Nwinners.toString());
     console.log(CostTicket.toString());
     console.log(Prize.toString());
-    console.log(PrizePerWinner.toString());
     console.log(MaxTickets.toString());
     console.log(MaxTicketsPlayers.toString());
     console.log(active.toString());
-
   };
+
+  async function pruebaError() {
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      "0x925463A53124b23B5162ad1C3dCffcBcd6BEE040",
+      abi,
+      signer
+    );
+    try {
+      await contract.createLottery(100, 1, 1, 10);
+    } catch (e) {
+      setError(e.reason);
+      setIfError(true);
+
+      console.log(e.reason);
+      return e.reason;
+    }
+  }
+
 
   return (
     <Box>
@@ -101,9 +119,9 @@ export default function Lottery(props) {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Card raised sx={{ width: 1 / 2 }}>
                 <Typography variant="h1">Prize:{Prize}</Typography>
+                <Typography>id:{IdGame}</Typography>
                 <Typography>Nº Winners:{Nwinners}</Typography>
                 <Typography>Cost Ticket:{CostTicket}</Typography>
-                <Typography>Prize:{PrizePerWinner}</Typography>
                 <Typography>Max Tickets:{MaxTickets}</Typography>
                 <Typography>Tickets left:{TicktetsLeft}</Typography>
                 <Typography>Max Tickets/wallet:{MaxTicketsPlayers}</Typography>
@@ -121,7 +139,16 @@ export default function Lottery(props) {
                       <BotonPersonalizado>Buy 2 Ticket</BotonPersonalizado>
                     </Grid>
                     <Grid item>
-                      <BotonPersonalizado>Buy {MaxTicketsPlayers} Ticket</BotonPersonalizado>
+                      <BotonPersonalizado>
+                        Buy {MaxTicketsPlayers} Ticket
+                      </BotonPersonalizado>
+                      <BotonPersonalizado onClick={pruebaError}>
+                        prueba
+                      </BotonPersonalizado>
+                      {ifError ? (<Alert severity="warning">{error}</Alert>
+                      ) : (
+                        <></>
+                      )}
                     </Grid>
                   </Grid>
                 ) : (
