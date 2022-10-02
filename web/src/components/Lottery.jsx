@@ -84,7 +84,7 @@ export default function Lottery(props) {
     const temTotalTicketUser = await contract.NTicketsOwner(account);
     console.log(temTotalTicketUser.toString());
     setTotalTicketsUser(parseInt(temTotalTicketUser));
-    setNTickets(parseInt(0))
+    setNTickets(parseInt(0));
     setButtonState("loaded");
   };
 
@@ -113,15 +113,17 @@ export default function Lottery(props) {
       abi,
       signer
     );
-    if (NTickets <= 0 && MaxTicketsPlayers-TotalTicketsUser<0) {
+    if (NTickets <= 0 && MaxTicketsPlayers - TotalTicketsUser > 0) {
       setError("Select number of tickets");
       setIfError(true);
       setOpen(true);
-    }else if(NTickets <= 0 && MaxTicketsPlayers-TotalTicketsUser==0){
-      setError("You already reached the maximum number of tickets on this wallet");
+    } else if (NTickets <= 0 && MaxTicketsPlayers - TotalTicketsUser == 0) {
+      setError(
+        "You already reached the maximum number of tickets on this wallet"
+      );
       setIfError(true);
       setOpen(true);
-    } else if(NTickets > 0){
+    } else if (NTickets > 0) {
       try {
         await contract.join(NTickets, {
           value: ethers.utils.parseEther((0.01 * NTickets).toString()),
