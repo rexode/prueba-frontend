@@ -1,7 +1,7 @@
 import React from "react";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { Button, Typography, Card, Grid, Alert } from "@mui/material";
+import { Button, Typography, Card, Grid, Alert,Snackbar } from "@mui/material";
 import { Box } from "@mui/system";
 import { Refresh } from "@mui/icons-material";
 import abi from "../abi/abi.json";
@@ -19,8 +19,10 @@ export default function Lottery(props) {
   const [buttonState, setButtonState] = useState("loaded");
   const [active, setActive] = useState(false);
   const { account, provider } = props;
-  const [ error, setError ] = useState("succesfull");
-  const [ ifError, setIfError ] = useState(false);
+  const [error, setError] = useState("succesfull");
+  const [ifError, setIfError] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
 
   const Aeth = 10 ** 18;
 
@@ -95,12 +97,11 @@ export default function Lottery(props) {
     } catch (e) {
       setError(e.reason);
       setIfError(true);
-
+      setOpen(true);
       console.log(e.reason);
       return e.reason;
     }
   }
-
 
   return (
     <Box>
@@ -145,9 +146,24 @@ export default function Lottery(props) {
                       <BotonPersonalizado onClick={pruebaError}>
                         prueba
                       </BotonPersonalizado>
-                      {ifError ? (<Alert severity="warning">{error}</Alert>
+                      {ifError ? (
+                        <Snackbar
+                          open={open}
+                          autoHideDuration={6000}
+                          onClose={setIfError(false)}
+                        >
+                          <Alert
+                            onClose={setIfError(false)}
+                            severity="success"
+                            sx={{ width: "100%" }}
+                          >
+                            This is a success message!
+                          </Alert>
+                        </Snackbar>
                       ) : (
-                        <></>
+                        <Alert severity="success" color="info">
+                          This is a success alert — check it out!
+                        </Alert>
                       )}
                     </Grid>
                   </Grid>
