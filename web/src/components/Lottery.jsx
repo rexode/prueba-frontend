@@ -1,9 +1,17 @@
 import React from "react";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { Button, Typography, Card, Grid, Alert,Snackbar } from "@mui/material";
+import {
+  Button,
+  Typography,
+  Card,
+  Grid,
+  Alert,
+  Snackbar,
+  ButtonGroup,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import { Refresh } from "@mui/icons-material";
+import { Refresh, Add, Remove } from "@mui/icons-material";
 import abi from "../abi/abi.json";
 import { styled } from "@mui/material";
 import { useTry, useTryAsync } from "no-try";
@@ -21,8 +29,9 @@ export default function Lottery(props) {
   const { account, provider } = props;
   const [error, setError] = useState("succesfull");
   const [ifError, setIfError] = useState(false);
-  const [open, setOpen] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [NTickets, setNTickets] = useState(parseInt(0));
+  const [TotalTicketsUser, setTotalTicketsUser] = useState(parseInt(0));
 
   const Aeth = 10 ** 18;
 
@@ -72,6 +81,10 @@ export default function Lottery(props) {
     console.log(temActive.toString());
     setActive(temActive);
 
+    const temTotalTicketUser = await contract.NTicketsOwner(account);
+    console.log(temTotalTicketUser.toString());
+    setTotalTicketsUser(parseInt(temTotalTicketUser));
+    setNTickets(parseInt(0))
     setButtonState("loaded");
   };
 
@@ -85,6 +98,14 @@ export default function Lottery(props) {
     console.log(active.toString());
   };
 
+  const ChangeNtickets = (boolean) => {
+    if (boolean && NTickets + 1 <= MaxTicketsPlayers - TotalTicketsUser) {
+      setNTickets(NTickets + 1);
+    } else if (!boolean && NTickets > 0) {
+      setNTickets(NTickets - 1);
+    }
+  };
+
   async function pruebaError() {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
@@ -92,16 +113,36 @@ export default function Lottery(props) {
       abi,
       signer
     );
-    try {
-      await contract.createLottery(100, 1, 1, 10);
-    } catch (e) {
-      setError(e.reason);
+    if (NTickets <= 0 && MaxTicketsPlayers-TotalTicketsUser<0) {
+      setError("Select number of tickets");
       setIfError(true);
       setOpen(true);
-      console.log(e.reason);
-      return e.reason;
+    }else if(NTickets <= 0 && MaxTicketsPlayers-TotalTicketsUser==0){
+      setError("You already reached the maximum number of tickets on this wallet");
+      setIfError(true);
+      setOpen(true);
+    } else if(NTickets > 0){
+      try {
+        await contract.join(NTickets, {
+          value: ethers.utils.parseEther((0.01 * NTickets).toString()),
+        });
+      } catch (e) {
+        setError(e.reason.substring(e.reason.indexOf(": ") + 1));
+        setIfError(true);
+        setOpen(true);
+        console.log(e.reason);
+        return e.reason;
+      }
     }
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <Box>
@@ -126,23 +167,32 @@ export default function Lottery(props) {
                 <Typography>Max Tickets:{MaxTickets}</Typography>
                 <Typography>Tickets left:{TicktetsLeft}</Typography>
                 <Typography>Max Tickets/wallet:{MaxTicketsPlayers}</Typography>
+                <Typography>
+                  TicketsAlreadyBought :{TotalTicketsUser}/{MaxTicketsPlayers}
+                </Typography>
                 {active ? (
-                  <Grid
-                    container
-                    direction="row"
-                    justifyContent="center"
-                    spacing={12}
-                  >
-                    <Grid item>
-                      <BotonPersonalizado>Buy 1 Ticket</BotonPersonalizado>
-                    </Grid>
-                    <Grid item>
-                      <BotonPersonalizado>Buy 2 Ticket</BotonPersonalizado>
-                    </Grid>
-                    <Grid item>
-                      <BotonPersonalizado>
-                        Buy {MaxTicketsPlayers} Ticket
-                      </BotonPersonalizado>
+                  <Box>
+                    <ButtonGroup
+                      variant="outlined"
+                      aria-label="outlined button group"
+                    >
+                      <Button
+                        onClick={() => {
+                          ChangeNtickets(true);
+                        }}
+                      >
+                        <Add />
+                      </Button>
+                      <Button>{NTickets}</Button>
+                      <Button
+                        onClick={() => {
+                          ChangeNtickets(false);
+                        }}
+                      >
+                        <Remove />
+                      </Button>
+                    </ButtonGroup>
+                    <Box sx={{ mt: 3 }}>
                       <BotonPersonalizado onClick={pruebaError}>
                         prueba
                       </BotonPersonalizado>
@@ -150,23 +200,33 @@ export default function Lottery(props) {
                         <Snackbar
                           open={open}
                           autoHideDuration={6000}
-                          onClose={setIfError(false)}
+                          onClose={handleClose}
                         >
                           <Alert
-                            onClose={setIfError(false)}
+                            onClose={handleClose}
+                            severity="warning"
+                            sx={{ width: "100%" }}
+                          >
+                            {error}
+                          </Alert>
+                        </Snackbar>
+                      ) : (
+                        <Snackbar
+                          open={open}
+                          autoHideDuration={6000}
+                          onClose={handleClose}
+                        >
+                          <Alert
+                            onClose={handleClose}
                             severity="success"
                             sx={{ width: "100%" }}
                           >
                             This is a success message!
                           </Alert>
                         </Snackbar>
-                      ) : (
-                        <Alert severity="success" color="info">
-                          This is a success alert — check it out!
-                        </Alert>
                       )}
-                    </Grid>
-                  </Grid>
+                    </Box>
+                  </Box>
                 ) : (
                   <Grid
                     container
