@@ -20,18 +20,21 @@ export default function (props) {
   const [lastGameId, setLastGameId] = useState(parseInt(0));
   const [active, setActive] = useState(false);
   const [buttonState, setButtonState] = useState("loaded");
-
-  let Winners = Array.from(Array(1000), () => new Array());
-  let Nwinners = [];
-  let Pool = [];
+  const [Nwinners, setNwinners] = useState([]);
+  const [Winners, setWinners] = useState([[], [], []]);
+  const [Pool, setPool] = useState([]);
+  const Aeth = 10 ** 18;
 
   const getInfoContract = async () => {
     setButtonState("loading");
     const contract = new ethers.Contract(
-      "0x925463A53124b23B5162ad1C3dCffcBcd6BEE040",
+      "0xf806F91F9E23E9639F83Ce7818720fCb4B79bbb9",
       abi,
       provider
     );
+    var pool = [0];
+    var nwinners = [0];
+    var winner = [[]];
 
     const temActive = await contract.active();
     console.log(temActive.toString());
@@ -40,35 +43,41 @@ export default function (props) {
     const temIdGame = await contract.idGame();
     console.log(temIdGame.toString());
 
-    let temlastGameId = temActive ? temIdGame : temIdGame;
+    let temlastGameId = temActive ? temIdGame - 1 : temIdGame;
     console.log(temlastGameId.toString());
     setLastGameId(temlastGameId);
 
     if (temlastGameId >= 1) {
       for (var i = temlastGameId; i > temlastGameId - 3 && i > 0; i--) {
+        var winners = [];
         const temNwinners = await contract.Nwinners(i);
         console.log(temNwinners.toString());
-        Nwinners.push(temNwinners);
+        nwinners.push(temNwinners);
 
-        const temPool = await contract.pool(i);
+        const temPool = (await contract.pool(i)) / Aeth;
         console.log(temPool.toString());
-        Pool.push(temPool);
+        pool.push("Prize:" + (temPool*0.8).toFixed(2));
+        console.log(pool);
 
-        Nwinners[i] = temNwinners;
         for (var j = 0; j < temNwinners; j++) {
           const temWinners = await contract.winners(i, j);
           console.log(temWinners);
-          Winners[i][j]=temWinners;
+          winners.push(j + "º position: " + temWinners);
         }
+        winner.push(winners);
       }
+      setPool(pool);
+      setNwinners(nwinners);
+      setWinners(winner);
     }
-      setButtonState("loaded");
+    setButtonState("loaded");
   };
   function ShowResults() {
+    console.log(Pool[lastGameId]);
     return (
-      <Box>
-        <Card raised sx={{ width: 1 / 2 }}>
-          <Typography>ssssss</Typography>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Card raised>
+          <Typography variant="h3">{Pool[lastGameId]}</Typography>
           {Winners[lastGameId].map((winner) => (
             <Typography>{winner}</Typography>
           ))}
@@ -78,7 +87,7 @@ export default function (props) {
   }
 
   return (
-    <Box>
+    <Box sx={{ marginTop: 3 }}>
       <Button onClick={getInfoContract} disabled={buttonState === "loading"}>
         <Refresh />
         {buttonState === "loaded" ? "Refresh" : "Fetching..."}

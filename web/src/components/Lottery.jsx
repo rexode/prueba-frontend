@@ -58,7 +58,7 @@ export default function Lottery(props) {
     }else{
       setButtonState("loading");
       const contract = new ethers.Contract(
-        "0x925463A53124b23B5162ad1C3dCffcBcd6BEE040",
+        "0xf806F91F9E23E9639F83Ce7818720fCb4B79bbb9",
         abi,
         provider
       );
@@ -188,7 +188,7 @@ export default function Lottery(props) {
   async function pruebaError() {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
-      "0x925463A53124b23B5162ad1C3dCffcBcd6BEE040",
+      "0xf806F91F9E23E9639F83Ce7818720fCb4B79bbb9",
       abi,
       signer
     );
