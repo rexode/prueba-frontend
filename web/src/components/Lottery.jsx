@@ -33,7 +33,7 @@ export default function Lottery(props) {
   const [Success, setSuccess] = useState(false);
 
   const [NTickets, setNTickets] = useState(parseInt(0));
-  const [TotalTicketsUser, setTotalTicketsUser] = useState(parseInt(0));
+  const [TotalTicketsUser, setTotalTicketsUser] = useState("Refresh");
   let PercentageWinners = [
     [],
     [0.8],
