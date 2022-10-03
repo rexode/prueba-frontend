@@ -17,7 +17,7 @@ export default function History() {
                     Who are we?
                 </Typography>
                 <Typography variant="h6">
-                Lorem ipsum dolor sit amet consectetur adipiscing, elit himenaeos praesent senectus natoque litora condimentum, montes neque molestie potenti egestas. Dignissim iaculis dapibus suspendisse ante tempus euismod torquent, nullam sed mauris fames suscipit platea, nibh eros tempor vel placerat montes. Porttitor aliquet tempor gravida eu pulvinar facilisis phasellus posuere suspendisse velit varius proin taciti mauris, urna at ut sodales maecenas litora sociis mi luctus nullam sollicitudin imperdiet nec. Vehicula primis sodales facilisis mollis velit tincidunt in nostra id dis feugiat, magna tortor ad aenean nam metus arcu ante cubilia vestibulum, dictum odio erat sociosqu blandit congue fringilla dictumst maecenas quisque.
+                pepe ipsum dolor sit amet consectetur adipiscing, elit himenaeos praesent senectus natoque litora condimentum, montes neque molestie potenti egestas. Dignissim iaculis dapibus suspendisse ante tempus euismod torquent, nullam sed mauris fames suscipit platea, nibh eros tempor vel placerat montes. Porttitor aliquet tempor gravida eu pulvinar facilisis phasellus posuere suspendisse velit varius proin taciti mauris, urna at ut sodales maecenas litora sociis mi luctus nullam sollicitudin imperdiet nec. Vehicula primis sodales facilisis mollis velit tincidunt in nostra id dis feugiat, magna tortor ad aenean nam metus arcu ante cubilia vestibulum, dictum odio erat sociosqu blandit congue fringilla dictumst maecenas quisque.
 
                 </Typography>
             </Box>

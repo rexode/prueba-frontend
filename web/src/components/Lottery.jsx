@@ -28,10 +28,10 @@ export default function Lottery(props) {
   const [active, setActive] = useState(false);
   const { account, provider } = props;
   const [error, setError] = useState("succesfull");
-  const [ifError, setIfError] = useState(false);
   const [open, setOpen] = useState(false);
   const [NTickets, setNTickets] = useState(parseInt(0));
   const [TotalTicketsUser, setTotalTicketsUser] = useState(parseInt(0));
+  let PercentageWinners=[[0.8],[0.6,0.2],[0.5,0.2,0.1],[0.50,0.10,0.10,0.5,0.5]]
 
   const Aeth = 10 ** 18;
 
@@ -103,6 +103,9 @@ export default function Lottery(props) {
       setNTickets(NTickets + 1);
     } else if (!boolean && NTickets > 0) {
       setNTickets(NTickets - 1);
+    }else if(boolean && NTickets + 1 > MaxTicketsPlayers - TotalTicketsUser){
+      setError("You can't buy more");
+      setOpen(true);
     }
   };
 
@@ -115,13 +118,11 @@ export default function Lottery(props) {
     );
     if (NTickets <= 0 && MaxTicketsPlayers - TotalTicketsUser > 0) {
       setError("Select number of tickets");
-      setIfError(true);
       setOpen(true);
     } else if (NTickets <= 0 && MaxTicketsPlayers - TotalTicketsUser == 0) {
       setError(
         "You already reached the maximum number of tickets on this wallet"
       );
-      setIfError(true);
       setOpen(true);
     } else if (NTickets > 0) {
       try {
@@ -130,7 +131,6 @@ export default function Lottery(props) {
         });
       } catch (e) {
         setError(e.reason.substring(e.reason.indexOf(": ") + 1));
-        setIfError(true);
         setOpen(true);
         console.log(e.reason);
         return e.reason;
@@ -157,7 +157,7 @@ export default function Lottery(props) {
             disabled={buttonState === "loading"}
           >
             <Refresh />
-            {buttonState === "loaded" ? "Refresh" : "Fetching..."}
+          {buttonState === "loaded" ? "Refresh" : "Fetching..."}
           </Button>
           {buttonState === "loaded" ? (
             <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -198,7 +198,7 @@ export default function Lottery(props) {
                       <BotonPersonalizado onClick={pruebaError}>
                         prueba
                       </BotonPersonalizado>
-                      {ifError ? (
+                      {open ? (
                         <Snackbar
                           open={open}
                           autoHideDuration={6000}
