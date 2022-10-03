@@ -68,7 +68,8 @@ export default function (props) {
     return (
       <Box>
         <Card raised sx={{ width: 1 / 2 }}>
-          {Nwinners.map((winner) => (
+          <Typography>ssssss</Typography>
+          {Winners[lastGameId].map((winner) => (
             <Typography>{winner}</Typography>
           ))}
         </Card>
