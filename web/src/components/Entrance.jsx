@@ -28,17 +28,20 @@ const theme = createTheme({
 });
 
 const BotonPersonalizado = styled(Button)({
-    color: "#f5efff",
-    background: "linear-gradient(to right bottom, #4e54c8, #8f94fb)",
-    borderRadius: 50,
-    border:1  ,
-  });
+  color: "#f5efff",
+  background: "linear-gradient(to right bottom,  #bd91de, #7371fc)",
+  borderRadius: 50,
+  border: 1,
+});
 const Entrance = ()=>{
 
 return (
   <Paper
     elevation={0}
-    sx={{ backgroundImage: `url(${imageBackground})`, marginTop: 2 }}
+    sx={{
+      background: "linear-gradient(to right bottom, #a594f9, #cdc1ff)",
+      marginTop: 2,
+    }}
     variant="outlined"
     square
   >

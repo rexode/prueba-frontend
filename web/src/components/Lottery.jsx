@@ -52,10 +52,10 @@ export default function Lottery(props) {
   });
 
   const getInfoContract = async () => {
-    if(provider==null){
+    if (provider == null) {
       setError("Connect to Blockchain");
       setOpen(true);
-    }else{
+    } else {
       setButtonState("loading");
       const contract = new ethers.Contract(
         "0xf806F91F9E23E9639F83Ce7818720fCb4B79bbb9",
@@ -109,57 +109,102 @@ export default function Lottery(props) {
   function showLottery() {
     let PrizeWinners = [];
     for (let i = 0; i < Nwinners; i++) {
-      PrizeWinners.push((i+1)+"º Premio: "+(Pool * PercentageWinners[Nwinners][i]).toFixed(2).toString());
+      PrizeWinners.push(
+        i +
+          1 +
+          "º Premio: " +
+          (Pool * PercentageWinners[Nwinners][i]).toFixed(2).toString()
+      );
     }
 
     return (
-      <Card raised sx={{ width: 1 / 2 }}>
-        <Typography variant="h1">Prize:{Prize}</Typography>
-        <Typography>id:{IdGame}</Typography>
-        <Typography>Nº Winners:{Nwinners}</Typography>
-        <Typography>Cost Ticket:{CostTicket}</Typography>
-        <Typography>Max Tickets:{MaxTickets}</Typography>
-        <Typography>Tickets left:{TicktetsLeft}</Typography>
-        <Typography>Max Tickets/wallet:{MaxTicketsPlayers}</Typography>
-        <Typography>
-          TicketsAlreadyBought :{TotalTicketsUser}/{MaxTicketsPlayers}
-        </Typography>
-        {PrizeWinners.map((winner) => (
-          <Typography>{winner}</Typography>
-        ))}
-        {active ? (
-          <Box>
-            <ButtonGroup variant="outlined" aria-label="outlined button group">
-              <Button
-                onClick={() => {
-                  ChangeNtickets(true);
-                }}
-              >
-                <Add />
-              </Button>
-              <Button>{NTickets}</Button>
-              <Button
-                onClick={() => {
-                  ChangeNtickets(false);
-                }}
-              >
-                <Remove />
-              </Button>
-            </ButtonGroup>
-            <Box sx={{ mt: 3 }}>
-              <BotonPersonalizado onClick={pruebaError}>
-                prueba
-              </BotonPersonalizado>
-              
-            </Box>
-          </Box>
-        ) : (
-          <Grid container direction="row" justifyContent="center" spacing={12}>
-            <Grid item>
-              <BotonPersonalizado disabled>Lottery ended</BotonPersonalizado>
+      <Card raised sx={{ width: "50%", minHeight: 400 }} >
+        <Grid container alignItems="center" rowSpacing={1} sx={{mb:2}}>
+          <Grid item xs={12}>
+            <Typography variant="h1">Prize:{Prize}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography>id:{IdGame}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography>Nº Winners:{Nwinners}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography>Cost Ticket:{CostTicket}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography>Max Tickets:{MaxTickets}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography>Tickets left:{TicktetsLeft}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography>Max Tickets/wallet:{MaxTicketsPlayers}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>
+              TicketsAlreadyBought :{TotalTicketsUser}/{MaxTicketsPlayers}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              rowSpacing={2}
+            >
+              {PrizeWinners.map((winner) => (
+                <Grid item xs={2}>
+                  <Typography>{winner}</Typography>
+                </Grid>
+              ))}
             </Grid>
           </Grid>
-        )}
+          <Grid item xs={12}>
+            {active ? (
+              <Grid container direction="column" alignItems="center" >
+                <ButtonGroup
+                  variant="outlined"
+                  aria-label="outlined button group"
+                >
+                  <Button
+                    onClick={() => {
+                      ChangeNtickets(true);
+                    }}
+                  >
+                    <Add />
+                  </Button>
+                  <Button>{NTickets}</Button>
+                  <Button
+                    onClick={() => {
+                      ChangeNtickets(false);
+                    }}
+                  >
+                    <Remove />
+                  </Button>
+                </ButtonGroup>
+                <Box sx={{ mt: 3 }}>
+                  <BotonPersonalizado onClick={pruebaError}>
+                    prueba
+                  </BotonPersonalizado>
+                </Box>
+              </Grid>
+            ) : (
+              <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                spacing={12}
+              >
+                <Grid item>
+                  <BotonPersonalizado disabled>
+                    Lottery ended
+                  </BotonPersonalizado>
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
       </Card>
     );
   }
@@ -231,7 +276,7 @@ export default function Lottery(props) {
   };
 
   return (
-    <Box>
+    <Box style={{ backgroundColor: "#f5efff" }}>
       {open ? (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert
@@ -262,7 +307,8 @@ export default function Lottery(props) {
       ) : (
         <></>
       )}
-      <Box>
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h1">Lottery</Typography>
         <Button onClick={getInfoContract} disabled={buttonState === "loading"}>
           <Refresh />
           {buttonState === "loaded" ? "Refresh" : "Fetching..."}

@@ -12,6 +12,9 @@ import {
   Alert,
   Snackbar,
   ButtonGroup,
+  CardContent,
+  CardActions,
+  IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -56,7 +59,7 @@ export default function (props) {
 
         const temPool = (await contract.pool(i)) / Aeth;
         console.log(temPool.toString());
-        pool.push("Prize:" + (temPool*0.8).toFixed(2));
+        pool.push("Prize:" + (temPool * 0.8).toFixed(2));
         console.log(pool);
 
         for (var j = 0; j < temNwinners; j++) {
@@ -73,21 +76,60 @@ export default function (props) {
     setButtonState("loaded");
   };
   function ShowResults() {
-    console.log(Pool[lastGameId]);
+    console.log(parseInt(lastGameId));
     return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Card raised>
-          <Typography variant="h3">{Pool[lastGameId]}</Typography>
-          {Winners[lastGameId].map((winner) => (
-            <Typography>{winner}</Typography>
-          ))}
-        </Card>
-      </Box>
+      <>
+        {parseInt(lastGameId) == 0 ? (
+          <Box
+            sx={{
+              justifyContent: "center",
+              minWidth: "50%",
+              minHeight: 300,
+            }}
+          >
+            <Card
+              raised
+              style={{
+                minHeight: "100%",
+                justify: "center",
+                alignContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CardContent>
+                <Typography variant="h2">Refresh</Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <Button aria-label="add to favorites">
+                  <Refresh/>
+                  Refresh
+                </Button>
+              </CardActions>
+            </Card>
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              background: "FEFFF0",
+            }}
+          >
+            <Card raised>
+              <Typography variant="h3">{Pool[lastGameId]}</Typography>
+              {Winners[lastGameId].map((winner) => (
+                <Typography>{winner}</Typography>
+              ))}
+            </Card>
+          </Box>
+        )}
+      </>
     );
   }
 
   return (
-    <Box sx={{ marginTop: 3 }}>
+    <Box sx={{ background: "#FEFFF0" ,p:3}}>
+      <Typography variant="h1">Results</Typography>
       <Button onClick={getInfoContract} disabled={buttonState === "loading"}>
         <Refresh />
         {buttonState === "loaded" ? "Refresh" : "Fetching..."}

@@ -69,23 +69,27 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App" style={{ backgroundColor: "#f5efff" }}>
+      <div className="App">
         <Navbar initConnection={initConnection} account={account} />
         <Entrance />
         <Toolbar
           sx={{
-            background: "linear-gradient(to right bottom, #4e54c8, #8f94fb)",
+            background: "linear-gradient(to right bottom,  #bd91de, #7371fc)",
             boxShadow: 2,
           }}
         ></Toolbar>
         <History />
         <Lottery account={account} provider={provider} />
-        <Results account={account} provider={provider}/>
-        <Box sx={{background:'linear-gradient(to bottom right, #fe6b8b 30%, #ff8e53 90%)', width: 1,
-        height: 300}}></Box>
+        <Results account={account} provider={provider} />
+        <Box
+          sx={{
+            background:
+              "linear-gradient(to bottom right, #fe6b8b 30%, #ff8e53 90%)",
+            width: 1,
+            height: 300,
+          }}
+        ></Box>
       </div>
-
-
     </ThemeProvider>
   );
 }

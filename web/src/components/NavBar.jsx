@@ -15,7 +15,7 @@ import App from "../App";
 
 const NavbarPersonalizada = styled(AppBar)({
   color: "white",
-  background: "linear-gradient(to right bottom, #4e54c8, #8f94fb)",
+  background: "linear-gradient(to right bottom, #bd91de, #7371fc)",
 });
 
 
