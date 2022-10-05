@@ -31,7 +31,7 @@ export default function (props) {
   const getInfoContract = async () => {
     setButtonState("loading");
     const contract = new ethers.Contract(
-      "0xf806F91F9E23E9639F83Ce7818720fCb4B79bbb9",
+      "0x822d9E18C1E5e5A66A16102841DCAa0e138cb865",
       abi,
       provider
     );
