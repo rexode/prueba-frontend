@@ -24,7 +24,9 @@ const theme = createTheme({
     background: {
       default: "#f8f7ff",
     },
+    
   },
+ 
 });
 
 const BotonPersonalizado = styled(Button)({
@@ -36,6 +38,7 @@ const BotonPersonalizado = styled(Button)({
 const Entrance = ()=>{
 
 return (
+  <ThemeProvider theme={theme}>
   <Paper
     elevation={0}
     sx={{
@@ -74,6 +77,8 @@ return (
       <Typography variant="h1">Win</Typography>
     </Box>
   </Paper>
+  </ThemeProvider >
+
 );
 
 

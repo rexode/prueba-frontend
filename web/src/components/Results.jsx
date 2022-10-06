@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Refresh, Add, Remove } from "@mui/icons-material";
+import { styled } from "@mui/material";
 
 import { ethers } from "ethers";
 import abi from "../abi/abi.json";
@@ -17,8 +18,10 @@ import {
   IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
-
-export default function (props) {
+const TypographyPer = styled(Typography)({
+  color: "#4e54c8",
+});
+export default function Results(props) {
   const { account, provider } = props;
   const [lastGameId, setLastGameId] = useState(parseInt(0));
   const [active, setActive] = useState(false);
@@ -80,33 +83,15 @@ export default function (props) {
     return (
       <>
         {parseInt(lastGameId) == 0 ? (
-          <Box
-            sx={{
-              justifyContent: "center",
-              minWidth: "50%",
-              minHeight: 300,
-            }}
-          >
-            <Card
-              raised
-              style={{
-                minHeight: "100%",
-                justify: "center",
-                alignContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h2">Refresh</Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <Button aria-label="add to favorites">
-                  <Refresh/>
-                  Refresh
-                </Button>
-              </CardActions>
-            </Card>
-          </Box>
+          
+          <Card raised sx={{ width: "50%", minHeight: 400,display:"flex"
+        }}>
+            <Grid container sx={{flexDirection: 'columns' ,justifyContent: 'center',alignItems:"center"}}>
+              <Grid item>
+              <TypographyPer variant="h1" sx={{flexGrow: 1}}>Refresh Data</TypographyPer>
+              </Grid>
+            </Grid>
+          </Card>
         ) : (
           <Box
             sx={{
@@ -116,9 +101,9 @@ export default function (props) {
             }}
           >
             <Card raised>
-              <Typography variant="h3">{Pool[lastGameId]}</Typography>
+              <TypographyPer variant="h3">{Pool[lastGameId]}</TypographyPer>
               {Winners[lastGameId].map((winner) => (
-                <Typography>{winner}</Typography>
+                <TypographyPer>{winner}</TypographyPer>
               ))}
             </Card>
           </Box>
@@ -128,9 +113,9 @@ export default function (props) {
   }
 
   return (
-    <Box sx={{ background: "#FEFFF0" ,p:3}}>
-      <Typography variant="h1">Results</Typography>
-      <Button onClick={getInfoContract} disabled={buttonState === "loading"}>
+    <Box sx={{ background: "#FEFFF0" ,pb: 10,pt:3 }}>
+      <Typography variant="h1" sx={{color:"#4e54c8"}}>Results</Typography>
+      <Button sx={{color:"#4e54c8"}} onClick={getInfoContract} disabled={buttonState === "loading"}>
         <Refresh />
         {buttonState === "loaded" ? "Refresh" : "Fetching..."}
       </Button>
