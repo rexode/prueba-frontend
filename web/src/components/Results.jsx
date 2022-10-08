@@ -67,7 +67,7 @@ export default function Results(props) {
 
         for (var j = 0; j < temNwinners; j++) {
           const temWinners = await contract.winners(i, j);
-          console.log(temWinners);
+          console.log(i + "serie" + " " + j + "º position: " + temWinners);
           winners.push(j + "º position: " + temWinners);
         }
         winner.push(winners);
@@ -83,39 +83,154 @@ export default function Results(props) {
     return (
       <>
         {parseInt(lastGameId) == 0 ? (
-          
-          <Card raised sx={{ width: "50%", minHeight: 400,display:"flex"
-        }}>
-            <Grid container sx={{flexDirection: 'columns' ,justifyContent: 'center',alignItems:"center"}}>
+          <Card raised sx={{ width: "50%", minHeight: 400, display: "flex" }}>
+            <Grid
+              container
+              sx={{
+                flexDirection: "columns",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Grid item>
-              <TypographyPer variant="h1" sx={{flexGrow: 1}}>Refresh Data</TypographyPer>
+                <TypographyPer variant="h1" sx={{ flexGrow: 1 }}>
+                  Refresh Data
+                </TypographyPer>
               </Grid>
             </Grid>
           </Card>
         ) : (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              background: "FEFFF0",
-            }}
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
           >
-            <Card raised>
-              <TypographyPer variant="h3">{Pool[lastGameId]}</TypographyPer>
-              {Winners[lastGameId].map((winner) => (
-                <TypographyPer>{winner}</TypographyPer>
-              ))}
-            </Card>
-          </Box>
+            <Grid item>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  background: "FEFFF0",
+                }}
+              >
+                <Card raised sx={{ minHeight: 300, p: 2 }}>
+                  <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    <Grid item>
+                      <TypographyPer variant="h3">
+                        {Pool[lastGameId]}
+                      </TypographyPer>
+                    </Grid>
+                    {Winners[lastGameId].map((winner) => (
+                      <Grid item>
+                        <TypographyPer>{winner}</TypographyPer>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Card>
+              </Box>
+            </Grid>
+            {parseInt(lastGameId - 1) >= 0 ? (
+              <Grid item>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        background: "FEFFF0",
+                      }}
+                    >
+                      <Card raised sx={{ p: 2 ,minHeight: 200}}>
+                        <Grid
+                          container
+                          direction="column"
+                          justifyContent="center"
+                          alignItems="center"
+                          spacing={2}
+                        >
+                          <Grid item>
+                            <TypographyPer variant="h3">
+                              {Pool[lastGameId - 1]}
+                            </TypographyPer>
+                          </Grid>
+                          {Winners[lastGameId - 1].map((winner) => (
+                            <Grid item>
+                              <TypographyPer>{winner}</TypographyPer>
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Card>
+                    </Box>
+                  </Grid>
+                  {parseInt(lastGameId - 2) >= 0 ? (
+                    <Grid item>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          background: "FEFFF0",
+                        }}
+                      >
+                        <Card raised sx={{ p: 2 }}>
+                          <Grid
+                            container
+                            direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <Grid item>
+                              <TypographyPer variant="h3">
+                                {Pool[lastGameId - 2]}
+                              </TypographyPer>
+                            </Grid>
+                            {Winners[lastGameId - 2].map((winner) => (
+                              <Grid item>
+                                <TypographyPer>{winner}</TypographyPer>
+                              </Grid>
+                            ))}
+                          </Grid>
+                        </Card>
+                      </Box>
+                    </Grid>
+                  ) : (
+                    <></>
+                  )}
+                </Grid>
+              </Grid>
+            ) : (
+              <></>
+            )}
+          </Grid>
         )}
       </>
     );
   }
 
   return (
-    <Box sx={{ background: "#FEFFF0" ,pb: 10,pt:3 }}>
-      <Typography variant="h1" sx={{color:"#4e54c8"}}>Results</Typography>
-      <Button sx={{color:"#4e54c8"}} onClick={getInfoContract} disabled={buttonState === "loading"}>
+    <Box sx={{ background: "#FEFFF0", pb: 10, pt: 3 }}>
+      <Typography variant="h1" sx={{ color: "#4e54c8" }}>
+        Results
+      </Typography>
+      <Button
+        sx={{ color: "#4e54c8" }}
+        onClick={getInfoContract}
+        disabled={buttonState === "loading"}
+      >
         <Refresh />
         {buttonState === "loaded" ? "Refresh" : "Fetching..."}
       </Button>

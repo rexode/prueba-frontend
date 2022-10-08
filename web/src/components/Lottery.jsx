@@ -11,7 +11,6 @@ import {
   Alert,
   Snackbar,
   ButtonGroup,
-  
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Refresh, Add, Remove } from "@mui/icons-material";
@@ -33,7 +32,6 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
- 
 });
 const TypographyPer = styled(Typography)({
   color: "#4e54c8",
@@ -63,7 +61,8 @@ export default function Lottery(props) {
     [0.8],
     [0.6, 0.2],
     [0.5, 0.2, 0.1],
-    [0.5, 0.1, 0.1, 0.5, 0.5],
+    [0.5, 0.1, 0.1, 0.05],
+    [0.5, 0.1, 0.1, 0.05, 0.05],
   ];
 
   const Aeth = 10 ** 18;
@@ -130,7 +129,6 @@ export default function Lottery(props) {
       setButtonState("loaded");
     }
   };
-
   function showLottery() {
     let PrizeWinners = [];
     for (let i = 0; i < Nwinners; i++) {
@@ -138,18 +136,26 @@ export default function Lottery(props) {
         i +
           1 +
           "º Premio: " +
-          (Pool * PercentageWinners[Nwinners][i]).toFixed(2).toString()
+          (Pool * PercentageWinners[Nwinners][i]).toFixed(3).toString()
       );
     }
 
     return (
       <ThemeProvider theme={theme}>
         {IdGame.toString() === "Refresh" ? (
-          <Card raised sx={{ width: "50%", minHeight: 400,display:"flex"
-        }}>
-            <Grid container sx={{flexDirection: 'columns' ,justifyContent: 'center',alignItems:"center"}}>
+          <Card raised sx={{ width: "50%", minHeight: 400, display: "flex" }}>
+            <Grid
+              container
+              sx={{
+                flexDirection: "columns",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Grid item>
-              <TypographyPer variant="h1" sx={{flexGrow: 1}} >Refresh Data</TypographyPer>
+                <TypographyPer variant="h1" sx={{ flexGrow: 1 }}>
+                  Refresh Data
+                </TypographyPer>
               </Grid>
             </Grid>
           </Card>
@@ -160,25 +166,27 @@ export default function Lottery(props) {
                 <TypographyPer variant="h1">Prize:{Prize}</TypographyPer>
               </Grid>
               <Grid item xs={4}>
-                <TypographyPer >id:{IdGame}</TypographyPer>
+                <TypographyPer>id:{IdGame}</TypographyPer>
               </Grid>
               <Grid item xs={4}>
-                <TypographyPer >Nº Winners:{Nwinners}</TypographyPer>
+                <TypographyPer>Nº Winners:{Nwinners}</TypographyPer>
               </Grid>
               <Grid item xs={4}>
-                <TypographyPer >Cost Ticket:{CostTicket}</TypographyPer>
+                <TypographyPer>Cost Ticket:{CostTicket}</TypographyPer>
               </Grid>
               <Grid item xs={4}>
-                <TypographyPer >Max Tickets:{MaxTickets}</TypographyPer>
+                <TypographyPer>Max Tickets:{MaxTickets}</TypographyPer>
               </Grid>
               <Grid item xs={4}>
-                <TypographyPer >Tickets left:{TicktetsLeft}</TypographyPer>
+                <TypographyPer>Tickets left:{TicktetsLeft}</TypographyPer>
               </Grid>
               <Grid item xs={4}>
-                <TypographyPer >Max Tickets/wallet:{MaxTicketsPlayers}</TypographyPer>
+                <TypographyPer>
+                  Max Tickets/wallet:{MaxTicketsPlayers}
+                </TypographyPer>
               </Grid>
               <Grid item xs={12}>
-                <TypographyPer >
+                <TypographyPer>
                   TicketsAlreadyBought :{TotalTicketsUser}/{MaxTicketsPlayers}
                 </TypographyPer>
               </Grid>
@@ -258,12 +266,19 @@ export default function Lottery(props) {
   };
 
   const ChangeNtickets = (boolean) => {
-    if (boolean && NTickets + 1 <= MaxTicketsPlayers - TotalTicketsUser) {
+    if (
+      boolean &&
+      NTickets + 1 <= MaxTicketsPlayers - TotalTicketsUser &&
+      TicktetsLeft > 0
+    ) {
       setNTickets(NTickets + 1);
     } else if (!boolean && NTickets > 0) {
       setNTickets(NTickets - 1);
     } else if (boolean && NTickets + 1 > MaxTicketsPlayers - TotalTicketsUser) {
       setError("You can't buy more");
+      setOpen(true);
+    } else if (boolean && TicktetsLeft == 0) {
+      setError("No more tickets available");
       setOpen(true);
     }
   };
@@ -345,9 +360,13 @@ export default function Lottery(props) {
       ) : (
         <></>
       )}
-      <Box sx={{ pb: 10,pt:3 }}>
+      <Box sx={{ pb: 10, pt: 3 }}>
         <TypographyPer variant="h1">Lottery</TypographyPer>
-        <Button sx={{color:"#4e54c8"}} onClick={getInfoContract} disabled={buttonState === "loading"}>
+        <Button
+          sx={{ color: "#4e54c8" }}
+          onClick={getInfoContract}
+          disabled={buttonState === "loading"}
+        >
           <Refresh />
           {buttonState === "loaded" ? "Refresh" : "Fetching..."}
         </Button>
