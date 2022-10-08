@@ -5,21 +5,20 @@ import { Typography,Card, Grid, CardMedia } from "@mui/material";
 import logo from "../assets/logo.jpg"
 export default function History() {
     return (
-      <Box style={{ backgroundColor: "#FEFFF0" }}>
+      <Box style={{ background: "linear-gradient(to right bottom,#37005b, #20005e)" }}>
         <Grid
           container
           spacing={2}
-          columns={2}
           sx={{ p: 5 }}
           direction="row"
           alignItems="center"
         >
-          <Grid item xs={1} alignItems="center">
+          <Grid item xs={12} md={6} alignItems="center">
             <CardMedia justify="center">
               <img src={logo} alt="Logo" />
             </CardMedia>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={12} md={6}>
             <Box sx={{ p: 4 }}>
               <Typography variant="h2" sx={{color:"#4e54c8"}}>Who are we?</Typography>
               <Typography variant="h6" sx={{color:"#4e54c8"}}>

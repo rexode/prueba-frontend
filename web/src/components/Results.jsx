@@ -68,7 +68,7 @@ export default function Results(props) {
         for (var j = 0; j < temNwinners; j++) {
           const temWinners = await contract.winners(i, j);
           console.log(i + "serie" + " " + j + "º position: " + temWinners);
-          winners.push(j + "º position: " + temWinners);
+          winners.push(temWinners);
         }
         winner.push(winners);
       }
@@ -130,7 +130,7 @@ export default function Results(props) {
                     </Grid>
                     {Winners[lastGameId].map((winner) => (
                       <Grid item>
-                        <TypographyPer>{winner}</TypographyPer>
+                        <TypographyPer>{Winners[lastGameId].indexOf(winner) +1}º Position: ...{winner.substring(winner.length - 7)}</TypographyPer>
                       </Grid>
                     ))}
                   </Grid>
@@ -169,7 +169,7 @@ export default function Results(props) {
                           </Grid>
                           {Winners[lastGameId - 1].map((winner) => (
                             <Grid item>
-                              <TypographyPer>{winner}</TypographyPer>
+                              <TypographyPer>{Winners[lastGameId - 1].indexOf(winner) +1}º Position: ...{winner.substring(winner.length - 7)}</TypographyPer>
                             </Grid>
                           ))}
                         </Grid>
@@ -200,7 +200,7 @@ export default function Results(props) {
                             </Grid>
                             {Winners[lastGameId - 2].map((winner) => (
                               <Grid item>
-                                <TypographyPer>{winner}</TypographyPer>
+                                <TypographyPer>{Winners[lastGameId - 2].indexOf(winner) +1}º Position: ...{winner.substring(winner.length - 7)}</TypographyPer>
                               </Grid>
                             ))}
                           </Grid>
@@ -222,7 +222,7 @@ export default function Results(props) {
   }
 
   return (
-    <Box sx={{ background: "#FEFFF0", pb: 10, pt: 3 }}>
+    <Box sx={{ background: "linear-gradient(to right bottom,#37005b, #20005e)", pb: 10, pt: 3 }}>
       <Typography variant="h1" sx={{ color: "#4e54c8" }}>
         Results
       </Typography>

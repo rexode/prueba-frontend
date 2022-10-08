@@ -19,6 +19,8 @@ import Lottery from "./components/Lottery";
 import Results from "./components/Results";
 import Footer from "./components/Footer";
 import { ethers } from "ethers";
+import imageBackground from "./assets/paisaje.jpg"
+
 
 const BotonPersonalizado = styled(Button)({
   color: "white",
@@ -45,9 +47,6 @@ const theme = createTheme({
       main: "#a594f9",
       dark: "pink",
       contrastText: "#fff",
-    },
-    background: {
-      default: "#f8f7ff",
     },
   },
 });
@@ -77,12 +76,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <Box className="App" sx={{backgroundImage:`url(${imageBackground})`,backgroundAttachment: "fixed"}}>
         <Navbar initConnection={initConnection} account={account} />
         <Entrance />
         <Toolbar
           sx={{
-            background: "linear-gradient(to right bottom,#bd91de, #7371fc)",
+            background: "linear-gradient(to right bottom,#5e0055, #20005e)",
             boxShadow: 2,
           }}
         ></Toolbar>
@@ -90,7 +89,7 @@ function App() {
         <Lottery account={account} provider={provider} />
         <Results account={account} provider={provider} />
         <Footer />
-      </div>
+      </Box>
     </ThemeProvider>
   );
 }

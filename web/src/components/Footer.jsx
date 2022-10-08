@@ -6,7 +6,7 @@ import {
   import { styled } from "@mui/material";
   const BoxPersonalizada = styled(Box)({
     color: "white",
-    background: "linear-gradient(to right bottom, #bd91de, #7371fc)",
+    background: "linear-gradient(to right top,#37005b, #20005e)",
   });
   const TypographyPer = styled(Typography)({
     color: "white",

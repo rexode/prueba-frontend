@@ -15,7 +15,7 @@ import App from "../App";
 
 const NavbarPersonalizada = styled(AppBar)({
   color: "white",
-  background: "linear-gradient(to right bottom, #bd91de, #7371fc)",
+  background: "rgba(0,0,0,0.0)",
 });
 
 
@@ -29,7 +29,7 @@ export default function Navbar(props) {
   return (
     <Box>
       <NavbarPersonalizada elevation={0} position="fixed">
-        <Toolbar>
+        <Toolbar >
           <Box sx={{ flexDirection: "row", display: "flex", flexGrow: 1 }}>
             <IconButton sx={{ color: "white" }}>
               <Celebration />

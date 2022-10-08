@@ -2,7 +2,7 @@ import { Paper, Typography,Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { styled } from "@mui/material";
-import imageBackground from "../assets/imageBackground.jpg"
+import imageBackground from "../assets/paisaje.jpg"
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 
@@ -42,8 +42,9 @@ return (
   <Paper
     elevation={0}
     sx={{
-      background: "linear-gradient(to right bottom, #a594f9, #cdc1ff)",
+      background: "rgba(0,0,0,0.0)",
       marginTop: 2,
+      minHeight:900,
     }}
     variant="outlined"
     square
