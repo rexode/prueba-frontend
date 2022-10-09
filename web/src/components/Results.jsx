@@ -49,7 +49,7 @@ export default function Results(props) {
     const tempSigner=provider.getSigner();
     setSigner(tempSigner);
     const contract = new ethers.Contract(
-      "0x822d9E18C1E5e5A66A16102841DCAa0e138cb865",
+      "0x98A66BC886cA0B85E8188E2b6191E04DCb7aa31e",
       abi,
       provider
     );
@@ -99,7 +99,7 @@ export default function Results(props) {
   async function Withdraw(id) {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
-      "0x822d9E18C1E5e5A66A16102841DCAa0e138cb865",
+      "0x98A66BC886cA0B85E8188E2b6191E04DCb7aa31e",
       abi,
       signer
     );
