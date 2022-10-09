@@ -1,10 +1,29 @@
-import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Link,
+  ListItem,
+  List,
+  Drawer,
+  useMediaQuery,
+  useTheme,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  
+} from "@mui/material";
 import { styled } from "@mui/material";
 import {
   Celebration,
   Twitter,
   Attachment,
   LocalActivity,
+  Menu,
+  AcUnit,
+  AirlineSeatFlat,
 } from "@mui/icons-material";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
@@ -18,62 +37,129 @@ const NavbarPersonalizada = styled(AppBar)({
   background: "rgba(0,0,0,0.0)",
 });
 
-
 export default function Navbar(props) {
   const [provider, setProvider] = useState(null);
-  const{initConnection,account}=props;
+  const { initConnection, account } = props;
 
+  const DrawerComponent = () => {
+    const [openDrawer, setOpenDrawer] = useState(false);
+    return (
+      <>
+        <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} PaperProps={{
+    sx: {
+      background: "linear-gradient(to right bottom,#5e0055, #20005e)",
+      color: "white",
+    }
+  }}
+>
+          <List > 
+            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {index % 2 === 0 ? <AcUnit sx={{ color: "white" }}/> : <AirlineSeatFlat sx={{ color: "white" }}/>}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
+          <Menu sx={{ color: "white" }} />
+        </IconButton>
+      </>
+    );
+  };
 
+  const theme = useTheme();
   const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Box>
-      <NavbarPersonalizada elevation={0} position="fixed">
-        <Toolbar >
-          <Box sx={{ flexDirection: "row", display: "flex", flexGrow: 1 }}>
-            <IconButton sx={{ color: "white" }}>
-              <Celebration />
-            </IconButton>
-            <Typography variant="h6" component="div">
-              CryptoLucky
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              alignItems: "Right",
-              textAlign: "center",
-            }}
-          >
-            <Button disableElevation sx={{ color: "white", m: 3 }}>
-              <Twitter />
-              <Typography sx={{ minWidth: 100 }}>Twitter</Typography>{" "}
-            </Button>
-            <Button disableElevation sx={{ color: "white", m: 3 }}>
-              <Attachment />
-              <Typography sx={{ minWidth: 100 }}>WhitePaper</Typography>
-            </Button>
-            <Button disableElevation sx={{ color: "white", m: 3 }}>
-              <LocalActivity />
-              <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
-            </Button>
-          </Box>
+    <>
+      {isMobile ? (
+        <Box>
+          <NavbarPersonalizada elevation={0} position="fixed">
+            <Toolbar>
+              <Box sx={{ flexDirection: "row", display: "flex", flexGrow: 1 }}>
+                <DrawerComponent />
+                <IconButton sx={{ color: "white" }}>
+                  <Celebration />
+                </IconButton>
+                <Typography variant="h6" component="div">
+                  CryptoLucky
+                </Typography>
+              </Box>
+              {account == null ? (
+                <Button
+                  disableElevation
+                  sx={{ color: "white" }}
+                  onClick={initConnection}
+                >
+                  <Typography fontSize={16}>Log-in</Typography>
+                </Button>
+              ) : (
+                <Typography>
+                  ...{account.substring(account.length - 7)}
+                </Typography>
+              )}
+            </Toolbar>
+          </NavbarPersonalizada>
+          <Offset />
+        </Box>
+      ) : (
+        <Box>
+          <NavbarPersonalizada elevation={0} position="fixed">
+            <Toolbar>
+              <Box sx={{ flexDirection: "row", display: "flex", flexGrow: 1 }}>
+                <IconButton sx={{ color: "white" }}>
+                  <Celebration />
+                </IconButton>
+                <Typography variant="h6" component="div">
+                  CryptoLucky
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: "flex",
+                  alignItems: "Right",
+                  textAlign: "center",
+                }}
+              >
+                <Button disableElevation sx={{ color: "white", m: 3 }}>
+                  <Twitter />
+                  <Typography sx={{ minWidth: 100 }}>Twitter</Typography>{" "}
+                </Button>
+                <Button disableElevation sx={{ color: "white", m: 3 }}>
+                  <Attachment />
+                  <Typography sx={{ minWidth: 100 }}>WhitePaper</Typography>
+                </Button>
+                <Button disableElevation sx={{ color: "white", m: 3 }}>
+                  <LocalActivity />
+                  <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
+                </Button>
+              </Box>
 
-          {account == null ? (
-            <Button
-              disableElevation
-              sx={{ color: "white" }}
-              onClick={initConnection}
-            >
-              <Typography fontSize={16}>Log-in</Typography>
-            </Button>
-          ) : (
-            <Typography>...{account.substring(account.length - 7)}</Typography>
-          )}
-        </Toolbar>
-      </NavbarPersonalizada>
-      <Offset />
-    </Box>
+              {account == null ? (
+                <Button
+                  disableElevation
+                  sx={{ color: "white" }}
+                  onClick={initConnection}
+                >
+                  <Typography fontSize={16}>Log-in</Typography>
+                </Button>
+              ) : (
+                <Typography>
+                  ...{account.substring(account.length - 7)}
+                </Typography>
+              )}
+            </Toolbar>
+          </NavbarPersonalizada>
+          <Offset />
+        </Box>
+      )}
+    </>
   );
 }

@@ -14,8 +14,8 @@ export default function History() {
           alignItems="center"
         >
           <Grid item xs={12} md={6} alignItems="center">
-            <CardMedia justify="center">
-              <img src={logo} alt="Logo" />
+            <CardMedia justify="center" >
+              <img src={logo} alt="Logo"style={{ width: 300, height: 300 }}  />
             </CardMedia>
           </Grid>
           <Grid item xs={12} md={6}>
