@@ -230,7 +230,7 @@ export default function Lottery(props) {
                     </ButtonGroup>
 
                     <Box sx={{ mt: 3 }}>
-                      <BotonPersonalizado onClick={pruebaError} sx={{ marginLeft: 4, border: 3}}>
+                      <BotonPersonalizado onClick={join} sx={{ marginLeft: 4, border: 3}}>
                       <TypographyPer> Buy Tickets</TypographyPer>
                       </BotonPersonalizado>
                     </Box>
@@ -285,7 +285,7 @@ export default function Lottery(props) {
     }
   };
 
-  async function pruebaError() {
+  async function join() {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
       "0x822d9E18C1E5e5A66A16102841DCAa0e138cb865",

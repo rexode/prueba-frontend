@@ -19,7 +19,15 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 const TypographyPer = styled(Typography)({
-  color: "#4e54c8",
+  color: "white",
+});
+const BotonPersonalizado = styled(Button)({
+  color: "white",
+  background: "rgba(0,0,0,0.0)",
+  borderRadius: 50,
+  marginLeft: 4, 
+  border: 3
+  
 });
 export default function Results(props) {
   const { account, provider } = props;
@@ -28,11 +36,18 @@ export default function Results(props) {
   const [buttonState, setButtonState] = useState("loaded");
   const [Nwinners, setNwinners] = useState([]);
   const [Winners, setWinners] = useState([[], [], []]);
+  const [ifWinners, setIfWinners] = useState([[], [], []]);
+  const [signer,setSigner]=useState(null);
   const [Pool, setPool] = useState([]);
   const Aeth = 10 ** 18;
+  const [error, setError] = useState("succesfull"); 
+  const [open, setOpen] = useState(false);
+  const [Success, setSuccess] = useState(false);
 
   const getInfoContract = async () => {
     setButtonState("loading");
+    const tempSigner=provider.getSigner();
+    setSigner(tempSigner);
     const contract = new ethers.Contract(
       "0x822d9E18C1E5e5A66A16102841DCAa0e138cb865",
       abi,
@@ -69,6 +84,9 @@ export default function Results(props) {
           const temWinners = await contract.winners(i, j);
           console.log(i + "serie" + " " + j + "º position: " + temWinners);
           winners.push(temWinners);
+          const temIfWinners = await contract.WithdrawWinners(i, j)==true;
+          console.log(i + "serie" + " " + j + "ha withdraw: " + temIfWinners);
+          ifWinners.push(temIfWinners);
         }
         winner.push(winners);
       }
@@ -78,12 +96,29 @@ export default function Results(props) {
     }
     setButtonState("loaded");
   };
+  async function Withdraw(id) {
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      "0x822d9E18C1E5e5A66A16102841DCAa0e138cb865",
+      abi,
+      signer
+    );
+    
+      try {
+        await contract.withdrawByWinner(id);
+        setSuccess(true);
+      } catch (e) {
+        setError(e.reason.substring(e.reason.indexOf(": ") + 1));
+        setOpen(true);
+        console.log(e.reason);
+        return e.reason;
+    }
+  }
   function ShowResults() {
-    console.log(parseInt(lastGameId));
     return (
       <>
         {parseInt(lastGameId) == 0 ? (
-          <Card raised sx={{ width: "50%", minHeight: 400, display: "flex" }}>
+          <Card raised sx={{ width: "50%", minHeight: 400, display: "flex"  ,background: "rgba(0,0,0,0.0)"}}elevation={0}>
             <Grid
               container
               sx={{
@@ -115,7 +150,7 @@ export default function Results(props) {
                   background: "FEFFF0",
                 }}
               >
-                <Card raised sx={{ minHeight: 300, p: 2 }}>
+                <Card raised sx={{ minHeight: 300, p: 2 ,background: "rgba(0,0,0,0.0)"}}elevation={0}>
                   <Grid
                     container
                     direction="column"
@@ -131,6 +166,22 @@ export default function Results(props) {
                     {Winners[lastGameId].map((winner) => (
                       <Grid item>
                         <TypographyPer>{Winners[lastGameId].indexOf(winner) +1}º Position: ...{winner.substring(winner.length - 7)}</TypographyPer>
+                        {winner.toUpperCase() == account.toUpperCase() ?(
+                          <>
+                          {Winners[lastGameId][Winners[lastGameId].indexOf(winner)]!=true ? (
+                            <BotonPersonalizado onClick={() => Withdraw(lastGameId)} sx={{marginLeft: 4, border: 3}}>
+                            <TypographyPer>Congrats you Won</TypographyPer>
+                            </BotonPersonalizado>
+                          ):(
+                            <BotonPersonalizado disabled sx={{marginLeft: 4, border: 3}}>
+                            <TypographyPer>You already withdraw the prize</TypographyPer>
+                            </BotonPersonalizado>
+                          )}
+          </>
+                        ):(
+                        <BotonPersonalizado disabled sx={{marginLeft: 4, border: 3}}>
+                          <TypographyPer>You didn't Won</TypographyPer>
+                        </BotonPersonalizado>)}
                       </Grid>
                     ))}
                   </Grid>
@@ -154,7 +205,7 @@ export default function Results(props) {
                         background: "FEFFF0",
                       }}
                     >
-                      <Card raised sx={{ p: 2 ,minHeight: 200}}>
+                      <Card raised sx={{ p: 2 ,minHeight: 200,background: "rgba(0,0,0,0.0)"}}elevation={0}>
                         <Grid
                           container
                           direction="column"
@@ -170,6 +221,22 @@ export default function Results(props) {
                           {Winners[lastGameId - 1].map((winner) => (
                             <Grid item>
                               <TypographyPer>{Winners[lastGameId - 1].indexOf(winner) +1}º Position: ...{winner.substring(winner.length - 7)}</TypographyPer>
+                              {winner.toUpperCase() == account.toUpperCase() ?(
+                          <>
+                          {Winners[lastGameId-1][Winners[lastGameId-1].indexOf(winner)]!=true ? (
+                            <BotonPersonalizado onClick={() => Withdraw(lastGameId-1)} sx={{marginLeft: 4, border: 3}}>
+                            <TypographyPer>Congrats you Won</TypographyPer>
+                            </BotonPersonalizado>
+                          ):(
+                            <BotonPersonalizado disabled sx={{marginLeft: 4, border: 3}}>
+                            <TypographyPer>You already withdraw the prize</TypographyPer>
+                            </BotonPersonalizado>
+                          )}
+          </>
+                        ):(
+                        <BotonPersonalizado disabled sx={{marginLeft: 4, border: 3}}>
+                          <TypographyPer>You didn't Won</TypographyPer>
+                        </BotonPersonalizado>)}
                             </Grid>
                           ))}
                         </Grid>
@@ -185,7 +252,7 @@ export default function Results(props) {
                           background: "FEFFF0",
                         }}
                       >
-                        <Card raised sx={{ p: 2 }}>
+                        <Card raised sx={{ p: 2 ,background: "rgba(0,0,0,0.0)"}}elevation={0}>
                           <Grid
                             container
                             direction="column"
@@ -201,6 +268,22 @@ export default function Results(props) {
                             {Winners[lastGameId - 2].map((winner) => (
                               <Grid item>
                                 <TypographyPer>{Winners[lastGameId - 2].indexOf(winner) +1}º Position: ...{winner.substring(winner.length - 7)}</TypographyPer>
+                                {winner.toUpperCase() == account.toUpperCase() ?(
+                          <>
+                          {Winners[lastGameId-2][Winners[lastGameId-2].indexOf(winner)]!=true ? (
+                            <BotonPersonalizado onClick={() => Withdraw(lastGameId-2)} sx={{marginLeft: 4, border: 3}}>
+                            <TypographyPer>Congrats you Won</TypographyPer>
+                            </BotonPersonalizado>
+                          ):(
+                            <BotonPersonalizado disabled sx={{marginLeft: 4, border: 3}}>
+                            <TypographyPer>You already withdraw the prize</TypographyPer>
+                            </BotonPersonalizado>
+                          )}
+          </>
+                        ):(
+                        <BotonPersonalizado disabled sx={{marginLeft: 4, border: 3}}>
+                          <TypographyPer>You didn't Won</TypographyPer>
+                        </BotonPersonalizado>)}
                               </Grid>
                             ))}
                           </Grid>
@@ -220,20 +303,63 @@ export default function Results(props) {
       </>
     );
   }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
+    setOpen(false);
+  };
+  const handleCloseSuccess = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSuccess(false);
+  };
   return (
     <Box sx={{ background: "linear-gradient(to right bottom,#37005b, #20005e)", pb: 10, pt: 3 }}>
-      <Typography variant="h1" sx={{ color: "#4e54c8" }}>
+      {open ? (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="warning"
+            sx={{ width: "100%" }}
+          >
+            {error}
+          </Alert>
+        </Snackbar>
+      ) : (
+        <></>
+      )}
+      {Success ? (
+        <Snackbar
+          open={Success}
+          autoHideDuration={6000}
+          onClose={handleCloseSuccess}
+        >
+          <Alert
+            onClose={handleCloseSuccess}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Success!!
+          </Alert>
+        </Snackbar>
+      ) : (
+        <></>
+      )}
+      <TypographyPer variant="h1" >
         Results
-      </Typography>
-      <Button
-        sx={{ color: "#4e54c8" }}
+      </TypographyPer>
+      <BotonPersonalizado
+        sx={{ color: "white",marginLeft: 4, border: 3 }}
         onClick={getInfoContract}
         disabled={buttonState === "loading"}
       >
         <Refresh />
         {buttonState === "loaded" ? "Refresh" : "Fetching..."}
-      </Button>
+      </BotonPersonalizado>
       {buttonState === "loaded" ? (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           {ShowResults()}
