@@ -188,14 +188,14 @@ export default function Results(props) {
                             ] != true ? (
                               <BotonPersonalizado
                                 onClick={() => Withdraw(lastGameId)}
-                                sx={{ marginLeft: 4, border: 3 }}
+                                sx={{ marginTop: 2, border: 3 }}
                               >
                                 <TypographyPer>Congrats you Won</TypographyPer>
                               </BotonPersonalizado>
                             ) : (
                               <BotonPersonalizado
                                 disabled
-                                sx={{ marginLeft: 4, border: 3 }}
+                                sx={{ marginTop: 4, border: 3 }}
                               >
                                 <TypographyPer>
                                   You already withdraw the prize
