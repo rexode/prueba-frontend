@@ -20,8 +20,8 @@ export default function History() {
           </Grid>
           <Grid item xs={12} md={6}>
             <Box sx={{ p: 4 }}>
-              <Typography variant="h2" sx={{color:"#4e54c8"}}>Who are we?</Typography>
-              <Typography variant="h6" sx={{color:"#4e54c8"}}>
+              <Typography variant="h2" sx={{color:"white"}}>Who are we?</Typography>
+              <Typography variant="h6" sx={{color:"white"}}>
                 pepe ipsum dolor sit amet consectetur adipiscing, elit himenaeos
                 praesent senectus natoque litora condimentum, montes neque
                 molestie potenti egestas. Dignissim iaculis dapibus suspendisse

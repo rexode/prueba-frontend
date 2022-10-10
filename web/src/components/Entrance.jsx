@@ -31,7 +31,7 @@ const theme = createTheme({
 
 const BotonPersonalizado = styled(Button)({
   color: "#f5efff",
-  background: "linear-gradient(to right bottom,  #bd91de, #7371fc)",
+  background: "linear-gradient(to right bottom,#5e0055, #20005e)",
   borderRadius: 50,
   border: 1,
 });
@@ -45,6 +45,7 @@ return (
       background: "rgba(0,0,0,0.0)",
       marginTop: 2,
       minHeight:900,
+      border:0
     }}
     variant="outlined"
     square
