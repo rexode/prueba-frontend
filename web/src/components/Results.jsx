@@ -160,7 +160,9 @@ export default function Results(props) {
               >
                 <Card
                   raised
-                  sx={{ minHeight: 300, p: 2, background: "rgba(0,0,0,0.0)" }}
+                  sx={{ minHeight: 300,minWidth:300, p: 2, background: "rgba(0,0,0,0.0)",border: 4,
+                  color: "white",
+                  marginTop: 3, }}
                   elevation={0}
                 >
                   <Grid
@@ -234,7 +236,10 @@ export default function Results(props) {
                         sx={{
                           p: 2,
                           minHeight: 200,
-                          background: "rgba(0,0,0,0.0)",
+                          background: "rgba(0,0,0,0.0)",minWidth:300,minHeight:300,
+                          border: 4,
+              color: "white",
+              marginTop: 3,
                         }}
                         elevation={0}
                       >
@@ -301,7 +306,9 @@ export default function Results(props) {
                       >
                         <Card
                           raised
-                          sx={{ p: 2, background: "rgba(0,0,0,0.0)" }}
+                          sx={{ p: 2,minHeight:300, minWidth:300,background: "rgba(0,0,0,0.0)" ,border: 4,
+                          color: "white",
+                          marginTop: 3,}}
                           elevation={0}
                         >
                           <Grid

@@ -31,6 +31,7 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import React from "react";
 import App from "../App";
+import Lottery from "./Lottery";
 
 const NavbarPersonalizada = styled(AppBar)({
   color: "white",
@@ -53,7 +54,7 @@ export default function Navbar(props) {
   }}
 >
           <List > 
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+            {["Twitter", "Starred", "Send email", "Drafts"].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -112,11 +113,11 @@ export default function Navbar(props) {
         <Box>
           <NavbarPersonalizada elevation={0} position="fixed">
             <Toolbar>
-              <Box sx={{ flexDirection: "row", display: "flex", }}>
+              <Box sx={{ flexDirection: "row", display: "flex", }} >
                 <IconButton sx={{ color: "white" }}>
                   <Celebration />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{marginRight:4}}>
+                <Typography variant="h6" component="div" sx={{marginRight:4}} >
                   CryptoLucky
                 </Typography>
               </Box>
