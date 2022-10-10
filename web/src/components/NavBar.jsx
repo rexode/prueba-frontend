@@ -112,11 +112,11 @@ export default function Navbar(props) {
         <Box>
           <NavbarPersonalizada elevation={0} position="fixed">
             <Toolbar>
-              <Box sx={{ flexDirection: "row", display: "flex", flexGrow: 1 }}>
+              <Box sx={{ flexDirection: "row", display: "flex", }}>
                 <IconButton sx={{ color: "white" }}>
                   <Celebration />
                 </IconButton>
-                <Typography variant="h6" component="div">
+                <Typography variant="h6" component="div" sx={{marginRight:4}}>
                   CryptoLucky
                 </Typography>
               </Box>
