@@ -167,7 +167,6 @@ export default function Results(props) {
               >
                 <Card
                   raised
-<<<<<<< HEAD
                   sx={{
                     minHeight: 300,
                     minWidth: 300,
@@ -177,11 +176,6 @@ export default function Results(props) {
                     color: "white",
                     marginTop: 3,
                   }}
-=======
-                  sx={{ minHeight: 300,minWidth:300, p: 2, background: "rgba(0,0,0,0.0)",border: 4,
-                  color: "white",
-                  marginTop: 3, }}
->>>>>>> 6aa9313d073403a2290b93c79120a75ef1336f45
                   elevation={0}
                 >
                   <Grid
@@ -255,18 +249,11 @@ export default function Results(props) {
                         sx={{
                           p: 1,
                           minHeight: 200,
-<<<<<<< HEAD
                           minWidth: 300,
                           background: "rgba(0,0,0,0.0)",
                           border: 4,
                           color: "white",
                           marginTop: 3,
-=======
-                          background: "rgba(0,0,0,0.0)",minWidth:300,minHeight:300,
-                          border: 4,
-              color: "white",
-              marginTop: 3,
->>>>>>> 6aa9313d073403a2290b93c79120a75ef1336f45
                         }}
                         elevation={0}
                       >
@@ -333,7 +320,6 @@ export default function Results(props) {
                       >
                         <Card
                           raised
-<<<<<<< HEAD
                           sx={{
                             p: 1,
                             minWidth: 300,
@@ -343,11 +329,6 @@ export default function Results(props) {
                             marginTop: 3,
                             minHeight: 200,
                           }}
-=======
-                          sx={{ p: 2,minHeight:300, minWidth:300,background: "rgba(0,0,0,0.0)" ,border: 4,
-                          color: "white",
-                          marginTop: 3,}}
->>>>>>> 6aa9313d073403a2290b93c79120a75ef1336f45
                           elevation={0}
                         >
                           <Grid
