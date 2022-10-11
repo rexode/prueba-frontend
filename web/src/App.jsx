@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import {
   Button,
   Typography,
@@ -54,6 +54,14 @@ const theme = createTheme({
 function App() {
   const [account, setAccount] = useState(null);
   const [provider, setProvider] = useState(null);
+  const ref = useRef(null);
+
+
+  const handleClick = () => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+
 
   const initConnection = async () => {
     if (typeof window.ethereum !== "undefined") {
@@ -76,7 +84,13 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box className="App" sx={{backgroundImage:`url(${imageBackground})`,backgroundAttachment: "fixed"}}>
+      <Box
+        className="App"
+        sx={{
+          backgroundImage: `url(${imageBackground})`,
+          backgroundAttachment: "fixed",
+        }}
+      >
         <Navbar initConnection={initConnection} account={account} />
         <Entrance />
         <Toolbar
@@ -86,7 +100,9 @@ function App() {
           }}
         ></Toolbar>
         <History />
-        <Lottery account={account} provider={provider} />
+        <div id="lottery">
+          <Lottery account={account} provider={provider} />
+        </div>
         <Results account={account} provider={provider} />
         <Footer />
       </Box>

@@ -149,6 +149,7 @@ export default function Lottery(props) {
             sx={{
               width: "50%",
               minHeight: 400,
+              minWidth: 300,
               display: "flex",
               background: "rgba(0,0,0,0.0)",
               border: 4,
@@ -178,6 +179,7 @@ export default function Lottery(props) {
             sx={{
               width: "50%",
               minHeight: 400,
+              minWidth: 300,
               background: "rgba(0,0,0,0.0)",
               border: 4,
               color: "white",
@@ -271,7 +273,7 @@ export default function Lottery(props) {
                 </>
               ) : (
                 <Grid item>
-                  <BotonPersonalizado disabled sx={{ border: 3 ,marginTop:2}}>
+                  <BotonPersonalizado disabled sx={{ border: 3, marginTop: 2 }}>
                     <TypographyPer variant="h6"> Lottery ended</TypographyPer>
                   </BotonPersonalizado>
                 </Grid>

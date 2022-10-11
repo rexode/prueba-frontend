@@ -44,14 +44,16 @@ export default function Results(props) {
   const [Success, setSuccess] = useState(false);
 
   const getInfoContract = async () => {
-    setButtonState("loading");
-    const tempSigner = provider.getSigner();
-    setSigner(tempSigner);
-    const contract = new ethers.Contract(
-      "0x98A66BC886cA0B85E8188E2b6191E04DCb7aa31e",
-      abi,
-      provider
-    );
+    if (provider == null) {
+      setError("Connect to Blockchain");
+      setOpen(true);
+    } else {
+      setButtonState("loading");
+      const contract = new ethers.Contract(
+        "0x98A66BC886cA0B85E8188E2b6191E04DCb7aa31e",
+        abi,
+        provider
+      );
     var pool = [0];
     var nwinners = [0];
     var winner = [[]];
@@ -94,6 +96,7 @@ export default function Results(props) {
       setWinners(winner);
     }
     setButtonState("loaded");
+    }
   };
   async function Withdraw(id) {
     const signer = provider.getSigner();
@@ -122,8 +125,12 @@ export default function Results(props) {
             sx={{
               width: "50%",
               minHeight: 400,
+              minWidth: 300,
               display: "flex",
               background: "rgba(0,0,0,0.0)",
+              border: 4,
+              color: "white",
+              marginTop: 3,
             }}
             elevation={0}
           >
@@ -160,7 +167,15 @@ export default function Results(props) {
               >
                 <Card
                   raised
-                  sx={{ minHeight: 300, p: 2, background: "rgba(0,0,0,0.0)" }}
+                  sx={{
+                    minHeight: 300,
+                    minWidth: 300,
+                    p: 1,
+                    background: "rgba(0,0,0,0.0)",
+                    border: 4,
+                    color: "white",
+                    marginTop: 3,
+                  }}
                   elevation={0}
                 >
                   <Grid
@@ -232,9 +247,13 @@ export default function Results(props) {
                       <Card
                         raised
                         sx={{
-                          p: 2,
+                          p: 1,
                           minHeight: 200,
+                          minWidth: 300,
                           background: "rgba(0,0,0,0.0)",
+                          border: 4,
+                          color: "white",
+                          marginTop: 3,
                         }}
                         elevation={0}
                       >
@@ -301,7 +320,15 @@ export default function Results(props) {
                       >
                         <Card
                           raised
-                          sx={{ p: 2, background: "rgba(0,0,0,0.0)" }}
+                          sx={{
+                            p: 1,
+                            minWidth: 300,
+                            background: "rgba(0,0,0,0.0)",
+                            border: 4,
+                            color: "white",
+                            marginTop: 3,
+                            minHeight: 200,
+                          }}
                           elevation={0}
                         >
                           <Grid
