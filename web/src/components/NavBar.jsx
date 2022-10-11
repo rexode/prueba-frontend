@@ -30,7 +30,11 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import React from "react";
 import App from "../App";
+<<<<<<< HEAD
 import { Link } from "react-scroll";
+=======
+import Lottery from "./Lottery";
+>>>>>>> 6aa9313d073403a2290b93c79120a75ef1336f45
 
 const NavbarPersonalizada = styled(AppBar)({
   color: "white",
@@ -45,6 +49,7 @@ export default function Navbar(props) {
     const [openDrawer, setOpenDrawer] = useState(false);
     return (
       <>
+<<<<<<< HEAD
         <Drawer
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
@@ -57,6 +62,17 @@ export default function Navbar(props) {
         >
           <List>
             {["Twitter", "Whitepaper", "Lottery"].map((text, index) => (
+=======
+        <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} PaperProps={{
+    sx: {
+      background: "linear-gradient(to right bottom,#5e0055, #20005e)",
+      color: "white",
+    }
+  }}
+>
+          <List > 
+            {["Twitter", "Starred", "Send email", "Drafts"].map((text, index) => (
+>>>>>>> 6aa9313d073403a2290b93c79120a75ef1336f45
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -156,6 +172,7 @@ export default function Navbar(props) {
         <Box>
           <NavbarPersonalizada elevation={0} position="fixed">
             <Toolbar>
+<<<<<<< HEAD
               <Box sx={{ flexDirection: "row", display: "flex" }}>
                 <IconButton sx={{ color: "white" }}>
                   <Celebration />
@@ -165,6 +182,13 @@ export default function Navbar(props) {
                   component="div"
                   sx={{ marginRight: 4 }}
                 >
+=======
+              <Box sx={{ flexDirection: "row", display: "flex", }} >
+                <IconButton sx={{ color: "white" }}>
+                  <Celebration />
+                </IconButton>
+                <Typography variant="h6" component="div" sx={{marginRight:4}} >
+>>>>>>> 6aa9313d073403a2290b93c79120a75ef1336f45
                   CryptoLucky
                 </Typography>
               </Box>

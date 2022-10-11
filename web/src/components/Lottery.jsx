@@ -72,7 +72,6 @@ export default function Lottery(props) {
     background: "rgba(0,0,0,0.0)",
     borderRadius: 50,
     border: 1,
-    
   });
 
   const getInfoContract = async () => {
@@ -147,14 +146,13 @@ export default function Lottery(props) {
           <Card
             raised
             sx={{
-              width: "50%",
               minHeight: 400,
               minWidth: 300,
               display: "flex",
               background: "rgba(0,0,0,0.0)",
               border: 4,
               color: "white",
-              marginTop: 3,
+              margin: 3,
             }}
             elevation={0}
           >
@@ -183,7 +181,7 @@ export default function Lottery(props) {
               background: "rgba(0,0,0,0.0)",
               border: 4,
               color: "white",
-              marginTop: 3,
+              margin: 3,
             }}
             elevation={0}
           >
@@ -333,7 +331,7 @@ export default function Lottery(props) {
         await contract.join(NTickets, {
           value: ethers.utils.parseEther((0.01 * NTickets).toString()),
         });
-        setSuccess(true); 
+        setSuccess(true);
         setNTickets(0);
       } catch (e) {
         setError(e.reason.substring(e.reason.indexOf(": ") + 1));
@@ -360,7 +358,9 @@ export default function Lottery(props) {
   };
 
   return (
-    <Box style={{ background: "linear-gradient(to right top,#37005b, #20005e)" }}>
+    <Box
+      style={{ background: "linear-gradient(to right top,#37005b, #20005e)" }}
+    >
       {open ? (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert
@@ -394,7 +394,7 @@ export default function Lottery(props) {
       <Box sx={{ pb: 10, pt: 3 }}>
         <TypographyPer variant="h1">Lottery</TypographyPer>
         <BotonPersonalizado
-          sx={{ marginLeft: 4, border: 3}}
+          sx={{ marginLeft: 4, border: 3 }}
           onClick={getInfoContract}
           disabled={buttonState === "loading"}
         >
