@@ -192,11 +192,19 @@ export default function Lottery(props) {
               rowSpacing={1}
               sx={{ mb: 2 }}
             >
-              <Grid item xs={12}>
-                <TypographyPer variant="h2">Prize:{Prize}</TypographyPer>
+              <Grid item xs={12} sx={{ pt: 2, pl: 2 }}>
+                <TypographyPer variant="h2" align="left">
+                  Prize:{Prize}
+                </TypographyPer>
               </Grid>
               <Grid item xs={6} md={4}>
-                <TypographyPer>id:{IdGame}</TypographyPer>
+                <TypographyPer
+                  align="left"
+                  
+                  sx={{ fontWeight: "Light", pl: 2 }}
+                >
+                  id:{IdGame}
+                </TypographyPer>
               </Grid>
               <Grid item xs={6} md={4}>
                 <TypographyPer>Nº Winners:{Nwinners}</TypographyPer>
