@@ -123,7 +123,9 @@ export default function Results(props) {
               width: "50%",
               minHeight: 400,
               display: "flex",
-              background: "rgba(0,0,0,0.0)",
+              background: "rgba(0,0,0,0.0)",border: 4,
+              color: "white",
+              marginTop: 3
             }}
             elevation={0}
           >

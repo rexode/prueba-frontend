@@ -54,11 +54,11 @@ export default function Navbar(props) {
   }}
 >
           <List > 
-            {["Twitter", "Starred", "Send email", "Drafts"].map((text, index) => (
+            {["Twitter", "whitepaper", "To Lottery"].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    {index % 2 === 0 ? <AcUnit sx={{ color: "white" }}/> : <AirlineSeatFlat sx={{ color: "white" }}/>}
+                    {index === 1? <AcUnit sx={{ color: "white" }}/> : <AirlineSeatFlat sx={{ color: "white" }}/>}
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>

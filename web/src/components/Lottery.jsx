@@ -11,6 +11,7 @@ import {
   Alert,
   Snackbar,
   ButtonGroup,
+  Divider,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Refresh, Add, Remove } from "@mui/icons-material";
@@ -187,88 +188,123 @@ export default function Lottery(props) {
           >
             <Grid
               container
-              alignItems="center"
+              alignItems="stretch"
               justifyContent={"center"}
-              rowSpacing={1}
-              sx={{ mb: 2 }}
+              direction="column"
+              rowSpacing={1}              
             >
-              <Grid item xs={12}>
-                <TypographyPer variant="h2">Prize:{Prize}</TypographyPer>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <TypographyPer>id:{IdGame}</TypographyPer>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <TypographyPer>Nº Winners:{Nwinners}</TypographyPer>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <TypographyPer>Cost Ticket:{CostTicket}</TypographyPer>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <TypographyPer>Max Tickets:{MaxTickets}</TypographyPer>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <TypographyPer>Tickets left:{TicktetsLeft}</TypographyPer>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <TypographyPer>
-                  Max Tickets/wallet:{MaxTicketsPlayers}
-                </TypographyPer>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <TypographyPer>
-                  TicketsAlreadyBought :{TotalTicketsUser}/{MaxTicketsPlayers}
-                </TypographyPer>
-              </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} >
                 <Grid
                   container
-                  direction="column"
                   alignItems="center"
-                  rowSpacing={2}
+                  direction="row"
+                  justifyContent={"space-evenly"}
+                  
+                  
                 >
+                  <Grid item sx={6} xs={{minWidth: 300,}}>
+                  <Grid
+                  container
+                  alignItems="center"
+                  justifyContent={"center"}
+                  direction="column"
+                  rowSpacing={1}
+                  sx={{ m: 1 }}
+                >
+                  <Grid item >
+                  <TypographyPer variant="h2">Info</TypographyPer></Grid>
+                  <Grid item >
+                  <TypographyPer variant="h5">ID of the Game: {IdGame}</TypographyPer></Grid>
+                  <Grid item >
+                  <TypographyPer variant="h5">Number of Winners: {Nwinners}</TypographyPer></Grid>
+                  <Grid item xs={12}>
+                  <TypographyPer variant="h5">Ticket cost: {CostTicket}Eth</TypographyPer></Grid>
+                </Grid>
+                    
+
+                  </Grid>
+
+
+
+                
+              
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ bgcolor: "white" }}variant="middle"
+              />
+
+              <Grid item sx={6}>
+                <Grid
+                  container
+                  alignItems="center"
+                  justifyContent={"center"}
+                  direction="column"
+                  rowSpacing={1}
+                  sx={{ m: 1 }}
+                >
+                  <Grid item>
+                    <TypographyPer variant="h2">Prizes</TypographyPer>
+                  </Grid>
                   {PrizeWinners.map((winner) => (
                     <Grid item xs={2}>
-                      <TypographyPer color="primary">{winner}</TypographyPer>
+                      <TypographyPer color="primary" variant="h5">{winner}Eth </TypographyPer>
                     </Grid>
                   ))}
                 </Grid>
               </Grid>
-              {active ? (
-                <>
-                  <Grid item xs={12}>
-                    <ButtonGroup
-                      variant="outlined"
-                      aria-label="outlined button group"
-                    >
-                      <Button
-                        sx={{ color: "white" }}
-                        onClick={() => {
-                          ChangeNtickets(true);
-                        }}
-                      >
-                        <Add />
-                      </Button>
-                      <Button sx={{ color: "white" }}>{NTickets}</Button>
-                      <Button
-                        sx={{ color: "white" }}
-                        onClick={() => {
-                          ChangeNtickets(false);
-                        }}
-                      >
-                        <Remove />
-                      </Button>
-                    </ButtonGroup>
-                  </Grid>
+              </Grid>
+              
+              </Grid>
+              <Divider flexItem
+                sx={{ bgcolor: "white" }}variant="middle"/>
 
-                  <Grid item xs={12}>
-                    <Box sx={{ mt: 3 }}>
-                      <BotonPersonalizado onClick={join} sx={{ border: 3 }}>
-                        <TypographyPer variant="h6"> Buy Tickets</TypographyPer>
-                      </BotonPersonalizado>
-                    </Box>
+              {active ? (
+                <Grid item xs="12">
+                  <Grid
+                    container
+                    alignItems="center"
+                    justifyContent={"center"}
+                    rowSpacing={1}
+                    sx={{ m: 1 }}
+                  >
+                    <Grid item xs={12} md={6}>
+                      <ButtonGroup
+                        variant="outlined"
+                        aria-label="outlined button group"
+                      >
+                        <Button
+                          sx={{ color: "white" }}
+                          onClick={() => {
+                            ChangeNtickets(true);
+                          }}
+                        >
+                          <Add />
+                        </Button>
+                        <Button sx={{ color: "white" }}>{NTickets}</Button>
+                        <Button
+                          sx={{ color: "white" }}
+                          onClick={() => {
+                            ChangeNtickets(false);
+                          }}
+                        >
+                          <Remove />
+                        </Button>
+                      </ButtonGroup>
+                    </Grid>
+
+                    <Grid item>
+                      <Box sx={{}}>
+                        <BotonPersonalizado onClick={join} sx={{ border: 3 }}>
+                          <TypographyPer variant="h6">
+                            {" "}
+                            Buy Tickets
+                          </TypographyPer>
+                        </BotonPersonalizado>
+                      </Box>
+                    </Grid>
                   </Grid>
-                </>
+                </Grid>
               ) : (
                 <Grid item>
                   <BotonPersonalizado disabled sx={{ border: 3, marginTop: 2 }}>
