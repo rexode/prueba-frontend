@@ -86,7 +86,9 @@ function App() {
           }}
         ></Toolbar>
         <History />
-        <Lottery account={account} provider={provider} />
+        <div id="lottery">
+        <Lottery  account={account} provider={provider} />
+        </div>
         <Results account={account} provider={provider} />
         <Footer />
       </Box>

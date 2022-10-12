@@ -4,7 +4,6 @@ import {
   Typography,
   Button,
   IconButton,
-  Link,
   ListItem,
   List,
   Drawer,
@@ -31,7 +30,7 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import React from "react";
 import App from "../App";
-import Lottery from "./Lottery";
+import { Link } from "react-scroll";
 
 const NavbarPersonalizada = styled(AppBar)({
   color: "white",
@@ -46,21 +45,66 @@ export default function Navbar(props) {
     const [openDrawer, setOpenDrawer] = useState(false);
     return (
       <>
-        <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} PaperProps={{
-    sx: {
-      background: "linear-gradient(to right bottom,#5e0055, #20005e)",
-      color: "white",
-    }
-  }}
->
-          <List > 
-            {["Twitter", "whitepaper", "To Lottery"].map((text, index) => (
+        <Drawer
+          open={openDrawer}
+          onClose={() => setOpenDrawer(false)}
+          PaperProps={{
+            sx: {
+              background: "linear-gradient(to right bottom,#5e0055, #20005e)",
+              color: "white",
+            },
+          }}
+        >
+          <List>
+            {["Twitter", "Whitepaper", "Lottery"].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    {index === 1? <AcUnit sx={{ color: "white" }}/> : <AirlineSeatFlat sx={{ color: "white" }}/>}
+                    {index == 0 ? (
+                      <Button
+                        disableElevation
+                        href="https://Twitter.com"
+                        sx={{ color: "white", m: 3 }}
+                      >
+                        <Twitter />
+                        <Typography sx={{ minWidth: 100 }}>
+                          Twitter
+                        </Typography>{" "}
+                      </Button>
+                    ) : (
+                      <>
+                        {index == 1 ? (
+                          <Button
+                            disableElevation
+                            href="https://Twitter.com"
+                            sx={{ color: "white", m: 3 }}
+                          >
+                        <Attachment />
+                            <Typography sx={{ minWidth: 100 }}>
+                              
+                              Whitepaper
+                            </Typography>{" "}
+                          </Button>
+                        ) : (
+                          <Button
+                            disableElevation
+                            href="https://Twitter.com"
+                            sx={{ color: "white", m: 3 }}
+                          >
+                        <Celebration/>
+                        <Link
+                    activeClass="active"
+                    to="lottery"
+                    spy={true}
+                    smooth={true}
+                  >
+                    <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
+                  </Link>
+                          </Button>
+                        )}
+                      </>
+                    )}
                   </ListItemIcon>
-                  <ListItemText primary={text} />
                 </ListItemButton>
               </ListItem>
             ))}
@@ -113,11 +157,15 @@ export default function Navbar(props) {
         <Box>
           <NavbarPersonalizada elevation={0} position="fixed">
             <Toolbar>
-              <Box sx={{ flexDirection: "row", display: "flex", }} >
+              <Box sx={{ flexDirection: "row", display: "flex" }}>
                 <IconButton sx={{ color: "white" }}>
                   <Celebration />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{marginRight:4}} >
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{ marginRight: 4 }}
+                >
                   CryptoLucky
                 </Typography>
               </Box>
@@ -129,7 +177,11 @@ export default function Navbar(props) {
                   textAlign: "center",
                 }}
               >
-                <Button disableElevation sx={{ color: "white", m: 3 }}>
+                <Button
+                  disableElevation
+                  href="https://Twitter.com"
+                  sx={{ color: "white", m: 3 }}
+                >
                   <Twitter />
                   <Typography sx={{ minWidth: 100 }}>Twitter</Typography>{" "}
                 </Button>
@@ -139,7 +191,14 @@ export default function Navbar(props) {
                 </Button>
                 <Button disableElevation sx={{ color: "white", m: 3 }}>
                   <LocalActivity />
-                  <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
+                  <Link
+                    activeClass="active"
+                    to="lottery"
+                    spy={true}
+                    smooth={true}
+                  >
+                    <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
+                  </Link>
                 </Button>
               </Box>
 
