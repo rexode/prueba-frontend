@@ -9,7 +9,8 @@ import {
   Card,
   Grid,
   Alert,
-  Snackbar,
+  Snackbar,  useMediaQuery,
+
   ButtonGroup,
   Divider,
 } from "@mui/material";
@@ -47,7 +48,7 @@ export default function Lottery(props) {
   const [CostTicket, setCostTicket] = useState("Refresh");
   const [IdGame, setIdGame] = useState("Refresh");
   const [Pool, setPool] = useState("Refresh");
-
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [buttonState, setButtonState] = useState("loaded");
   const [active, setActive] = useState(false);
   const { account, provider } = props;
@@ -227,12 +228,13 @@ export default function Lottery(props) {
 
 
                 
-              
-              <Divider
+                  {!isMobile?(<Divider
                 orientation="vertical"
                 flexItem
                 sx={{ bgcolor: "white" }}variant="middle"
               />
+):(<></>)}
+              
 
               <Grid item sx={6}>
                 <Grid
@@ -256,8 +258,9 @@ export default function Lottery(props) {
               </Grid>
               
               </Grid>
-              <Divider flexItem
-                sx={{ bgcolor: "white" }}variant="middle"/>
+              {!isMobile?(<Divider flexItem
+                sx={{ bgcolor: "white" }}variant="middle"/>):(<></>)}
+              
 
               {active ? (
                 <Grid item xs="12">

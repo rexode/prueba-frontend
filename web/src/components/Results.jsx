@@ -187,7 +187,7 @@ export default function Results(props) {
                         </TypographyPer>
                         {winner.toUpperCase() == account.toUpperCase() ? (
                           <>
-                            {Winners[lastGameId][
+                            {ifWinners[lastGameId][
                               Winners[lastGameId].indexOf(winner)
                             ] != true ? (
                               <BotonPersonalizado
@@ -266,7 +266,7 @@ export default function Results(props) {
                               </TypographyPer>
                               {winner.toUpperCase() == account.toUpperCase() ? (
                                 <>
-                                  {Winners[lastGameId - 1][
+                                  {ifWinners[lastGameId - 1][
                                     Winners[lastGameId - 1].indexOf(winner)
                                   ] != true ? (
                                     <BotonPersonalizado
@@ -335,7 +335,7 @@ export default function Results(props) {
                                 {winner.toUpperCase() ==
                                 account.toUpperCase() ? (
                                   <>
-                                    {Winners[lastGameId - 2][
+                                    {ifWinners[lastGameId - 2][
                                       Winners[lastGameId - 2].indexOf(winner)
                                     ] != true ? (
                                       <BotonPersonalizado
