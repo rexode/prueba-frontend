@@ -55,6 +55,8 @@ export default function Results(props) {
     var pool = [0];
     var nwinners = [0];
     var winner = [[]];
+    var fwinner = [[]];
+
 
     const temActive = await contract.active();
     console.log(temActive.toString());
@@ -70,6 +72,7 @@ export default function Results(props) {
     if (temlastGameId >= 1) {
       for (var i = temlastGameId; i > temlastGameId - 3 && i > 0; i--) {
         var winners = [];
+        var fwinners = [];
         const temNwinners = await contract.Nwinners(i);
         console.log(temNwinners.toString());
         nwinners.push(temNwinners);
@@ -85,13 +88,16 @@ export default function Results(props) {
           winners.push(temWinners);
           const temIfWinners = (await contract.WithdrawWinners(i, j)) == true;
           console.log(i + "serie" + " " + j + "ha withdraw: " + temIfWinners);
-          ifWinners.push(temIfWinners);
+          fwinners.push(temIfWinners);
         }
         winner.push(winners);
+        fwinner.push(fwinners);
+
       }
       setPool(pool);
       setNwinners(nwinners);
       setWinners(winner);
+      setIfWinners(fwinner);
     }
     setButtonState("loaded");
   };
@@ -104,6 +110,12 @@ export default function Results(props) {
     );
 
     try {
+      console.log("id:"+id);
+
+      console.log("wallet:"+account);
+      console.log("id:"+Winners[id][0]);
+
+
       await contract.withdrawByWinner(id);
       setSuccess(true);
     } catch (e) {
@@ -177,6 +189,9 @@ export default function Results(props) {
                     <Grid item>
                       <TypographyPer variant="h3">
                         {Pool[lastGameId]}
+                      </TypographyPer>
+                      <TypographyPer variant="h5">
+                        Id:{lastGameId}
                       </TypographyPer>
                     </Grid>
                     {Winners[lastGameId].map((winner) => (
@@ -256,6 +271,9 @@ export default function Results(props) {
                             <TypographyPer variant="h3">
                               {Pool[lastGameId - 1]}
                             </TypographyPer>
+                            <TypographyPer variant="h5">
+                        Id:{lastGameId-1}
+                      </TypographyPer>
                           </Grid>
                           {Winners[lastGameId - 1].map((winner) => (
                             <Grid item>
@@ -324,6 +342,9 @@ export default function Results(props) {
                               <TypographyPer variant="h3">
                                 {Pool[lastGameId - 2]}
                               </TypographyPer>
+                              <TypographyPer variant="h5">
+                        Id:{lastGameId-2}
+                      </TypographyPer>
                             </Grid>
                             {Winners[lastGameId - 2].map((winner) => (
                               <Grid item>
