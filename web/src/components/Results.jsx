@@ -65,7 +65,7 @@ export default function Results(props) {
     const temIdGame = await contract.idGame();
     console.log(temIdGame.toString());
 
-    let temlastGameId = temActive ? temIdGame - 1 : temIdGame;
+    let temlastGameId = temActive ? temIdGame -1: temIdGame;
     console.log(temlastGameId.toString());
     setLastGameId(temlastGameId);
 
@@ -100,6 +100,7 @@ export default function Results(props) {
       setIfWinners(fwinner);
     }
     setButtonState("loaded");
+    console.log("xDDDDDDDD");
   };
   async function Withdraw(id) {
     const signer = provider.getSigner();
@@ -188,25 +189,25 @@ export default function Results(props) {
                   >
                     <Grid item>
                       <TypographyPer variant="h3">
-                        {Pool[lastGameId]}
+                        {Pool[3]}
                       </TypographyPer>
                       <TypographyPer variant="h5">
-                        Id:{lastGameId}
+                        Id:{lastGameId-2}
                       </TypographyPer>
                     </Grid>
-                    {Winners[lastGameId].map((winner) => (
+                    {Winners[3].map((winner) => (
                       <Grid item>
                         <TypographyPer>
-                          {Winners[lastGameId].indexOf(winner) + 1}º Position:
+                          {Winners[3].indexOf(winner) + 1}º Position:
                           ...{winner.substring(winner.length - 7)}
                         </TypographyPer>
                         {winner.toUpperCase() == account.toUpperCase() ? (
                           <>
-                            {ifWinners[lastGameId][
-                              Winners[lastGameId].indexOf(winner)
+                            {ifWinners[3][
+                              Winners[3].indexOf(winner)
                             ] != true ? (
                               <BotonPersonalizado
-                                onClick={() => Withdraw(lastGameId)}
+                                onClick={() => Withdraw(lastGameId-2)}
                                 sx={{ marginTop: 2, border: 3 }}
                               >
                                 <TypographyPer>Congrats you Won</TypographyPer>
@@ -269,23 +270,23 @@ export default function Results(props) {
                         >
                           <Grid item>
                             <TypographyPer variant="h3">
-                              {Pool[lastGameId - 1]}
+                              {Pool[2]}
                             </TypographyPer>
                             <TypographyPer variant="h5">
                         Id:{lastGameId-1}
                       </TypographyPer>
                           </Grid>
-                          {Winners[lastGameId - 1].map((winner) => (
+                          {Winners[2].map((winner) => (
                             <Grid item>
                               <TypographyPer>
-                                {Winners[lastGameId - 1].indexOf(winner) + 1}º
+                                {Winners[2].indexOf(winner) + 1}º
                                 Position: ...
                                 {winner.substring(winner.length - 7)}
                               </TypographyPer>
                               {winner.toUpperCase() == account.toUpperCase() ? (
                                 <>
-                                  {ifWinners[lastGameId - 1][
-                                    Winners[lastGameId - 1].indexOf(winner)
+                                  {ifWinners[2][
+                                    Winners[2].indexOf(winner)
                                   ] != true ? (
                                     <BotonPersonalizado
                                       onClick={() => Withdraw(lastGameId - 1)}
@@ -340,24 +341,24 @@ export default function Results(props) {
                           >
                             <Grid item>
                               <TypographyPer variant="h3">
-                                {Pool[lastGameId - 2]}
+                                {Pool[1]}
                               </TypographyPer>
                               <TypographyPer variant="h5">
-                        Id:{lastGameId-2}
+                                Id: {(parseInt(lastGameId))}
                       </TypographyPer>
                             </Grid>
-                            {Winners[lastGameId - 2].map((winner) => (
+                            {Winners[1].map((winner) => (
                               <Grid item>
                                 <TypographyPer>
-                                  {Winners[lastGameId - 2].indexOf(winner) + 1}º
+                                  {Winners[1].indexOf(winner) + 1}º
                                   Position: ...
                                   {winner.substring(winner.length - 7)}
                                 </TypographyPer>
                                 {winner.toUpperCase() ==
                                 account.toUpperCase() ? (
                                   <>
-                                    {ifWinners[lastGameId - 2][
-                                      Winners[lastGameId - 2].indexOf(winner)
+                                    {ifWinners[1][
+                                      Winners[1].indexOf(winner)
                                     ] != true ? (
                                       <BotonPersonalizado
                                         onClick={() => Withdraw(lastGameId - 2)}
