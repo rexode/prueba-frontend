@@ -65,9 +65,9 @@ export default function Results(props) {
     const temIdGame = await contract.idGame();
     console.log(temIdGame.toString());
 
-    let temlastGameId = temActive ? temIdGame -1: temIdGame;
+    let temlastGameId = temActive ? (temIdGame -1): temIdGame;
     console.log(temlastGameId.toString());
-    setLastGameId(temlastGameId);
+    setLastGameId(temlastGameId.toString());
 
     if (temlastGameId >= 1) {
       for (var i = temlastGameId; i > temlastGameId - 3 && i > 0; i--) {
@@ -112,12 +112,11 @@ export default function Results(props) {
 
     try {
       console.log("id:"+id);
-
       console.log("wallet:"+account);
-      console.log("id:"+Winners[id][0]);
+      
 
 
-      await contract.withdrawByWinner(id);
+      await contract.withdrawByWinner(parseInt(id));
       setSuccess(true);
     } catch (e) {
       setError(e.reason.substring(e.reason.indexOf(": ") + 1));
@@ -189,25 +188,25 @@ export default function Results(props) {
                   >
                     <Grid item>
                       <TypographyPer variant="h3">
-                        {Pool[3]}
+                        {Pool[1]}
                       </TypographyPer>
                       <TypographyPer variant="h5">
-                        Id:{lastGameId-2}
+                        Id:{lastGameId}
                       </TypographyPer>
                     </Grid>
-                    {Winners[3].map((winner) => (
+                    {Winners[1].map((winner) => (
                       <Grid item>
                         <TypographyPer>
-                          {Winners[3].indexOf(winner) + 1}º Position:
+                          {Winners[1].indexOf(winner) + 1}º Position:
                           ...{winner.substring(winner.length - 7)}
                         </TypographyPer>
                         {winner.toUpperCase() == account.toUpperCase() ? (
                           <>
-                            {ifWinners[3][
-                              Winners[3].indexOf(winner)
+                            {ifWinners[1][
+                              Winners[1].indexOf(winner)
                             ] != true ? (
                               <BotonPersonalizado
-                                onClick={() => Withdraw(lastGameId-2)}
+                                onClick={() => Withdraw(lastGameId)}
                                 sx={{ marginTop: 2, border: 3 }}
                               >
                                 <TypographyPer>Congrats you Won</TypographyPer>
@@ -341,27 +340,27 @@ export default function Results(props) {
                           >
                             <Grid item>
                               <TypographyPer variant="h3">
-                                {Pool[1]}
+                                {Pool[3]}
                               </TypographyPer>
                               <TypographyPer variant="h5">
-                                Id: {(parseInt(lastGameId))}
+                                Id: {(parseInt(lastGameId-2))}
                       </TypographyPer>
                             </Grid>
-                            {Winners[1].map((winner) => (
+                            {Winners[3].map((winner) => (
                               <Grid item>
                                 <TypographyPer>
-                                  {Winners[1].indexOf(winner) + 1}º
+                                  {Winners[3].indexOf(winner) + 1}º
                                   Position: ...
                                   {winner.substring(winner.length - 7)}
                                 </TypographyPer>
                                 {winner.toUpperCase() ==
                                 account.toUpperCase() ? (
                                   <>
-                                    {ifWinners[1][
-                                      Winners[1].indexOf(winner)
+                                    {ifWinners[3][
+                                      Winners[3].indexOf(winner)
                                     ] != true ? (
                                       <BotonPersonalizado
-                                        onClick={() => Withdraw(lastGameId - 2)}
+                                        onClick={() => Withdraw(lastGameId-2)}
                                         sx={{ marginLeft: 4, border: 3 }}
                                       >
                                         <TypographyPer>
