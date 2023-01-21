@@ -1,45 +1,23 @@
 import { Paper, Typography,Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import { styled } from "@mui/material";
+import { styled,CssBaseline } from "@mui/material";
 import imageBackground from "../assets/paisaje.jpg"
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {BotonPersonalizado,themeDark,themeLight} from "./Themes"
 
 
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#757ce8",
-      main: "#cdc1ff",
-      dark: "#002884",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ff7961",
-      main: "#a594f9",
-      dark: "pink",
-      contrastText: "#fff",
-    },
-    background: {
-      default: "#f8f7ff",
-    },
-    
-  },
- 
-});
 
-const BotonPersonalizado = styled(Button)({
-  color: "#f5efff",
-  background: "linear-gradient(to right bottom,#5e0055, #20005e)",
-  borderRadius: 50,
-  border: 1,
-});
-const Entrance = ()=>{
+
+
+export default function Entrance(props){
+  const {DarkMode} = props;
 
 return (
-  <ThemeProvider theme={theme}>
-  <Paper
+<ThemeProvider theme={DarkMode? themeLight:themeDark}>
+<CssBaseline />  
+    <Paper
     elevation={0}
     sx={{
       background: "rgba(0,0,0,0.0)",
@@ -50,33 +28,34 @@ return (
     variant="outlined"
     square
   >
+
     <Box>
-      <Typography variant="h1" sx={{ color: "white" }}>
+      <Typography variant="h1" color="primary">
         Easy To
       </Typography>
-      <Typography variant="h1" sx={{ color: "white" }}>
+      <Typography variant="h1" color="primary">
         Win
       </Typography>
-      <Typography variant="h3" sx={{ color: "white" }}>
+      <Typography variant="h3" color="primary">
         3 Simple steps
       </Typography>
-      <Typography variant="h4" sx={{ color: "white" }}>
+      <Typography variant="h4" color="primary">
         1º Connect your wallet
       </Typography>
-      <Typography variant="h4" sx={{ color: "white" }}>
+      <Typography variant="h4" color="primary">
         2º Buy the Tickets
-        <BotonPersonalizado sx={{ marginLeft: 4, border: 3 }}>
+        <Button >
           To Lottery
-        </BotonPersonalizado>
+        </Button>
       </Typography>
-      <Typography variant="h4" sx={{ color: "white" }}>
+      <Typography variant="h4" color="primary">
         3º Wait for the results
-        <BotonPersonalizado sx={{ marginLeft: 4, border: 3 }}>
+        <Button >
           To Results
-        </BotonPersonalizado>
+        </Button>
       </Typography>
-      <Typography variant="h1">Win</Typography>
-      <Typography variant="h1">Win</Typography>
+      <Typography variant="h1"color="primary">Win</Typography>
+      <Typography variant="h1"color="primary">Win</Typography>
     </Box>
   </Paper>
   </ThemeProvider >
@@ -85,4 +64,3 @@ return (
 
 
 }
-export default Entrance;

@@ -7,11 +7,12 @@ import {
   Container,
   Toolbar,
   Card,
-  AppBar
+  AppBar,
+  PaletteMode
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Refresh } from "@mui/icons-material";
-import { styled } from "@mui/material";
+import { styled,CssBaseline  } from "@mui/material";
 import Navbar from "./components/NavBar";
 import Entrance from "./components/Entrance";
 import History from "./components/History";
@@ -19,7 +20,9 @@ import Lottery from "./components/Lottery";
 import Results from "./components/Results";
 import Footer from "./components/Footer";
 import { ethers } from "ethers";
-import imageBackground from "./assets/paisaje.jpg"
+import imageBackground from "./assets/fondoEntero.png"
+import {themeDark,themeLight} from "./components/Themes"
+import abi from "./abi/abiToken.json";
 
 
 const BotonPersonalizado = styled(Button)({
@@ -34,27 +37,15 @@ const NavbarPersonalizada = styled(AppBar)({
   background: "linear-gradient(to right bottom, #bd91de, #7371fc)",
 });
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#757ce8",
-      main: "#cdc1ff",
-      dark: "#002884",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ff7961",
-      main: "#a594f9",
-      dark: "pink",
-      contrastText: "#fff",
-    },
-  },
-});
 
 function App() {
   const [account, setAccount] = useState(null);
   const [provider, setProvider] = useState(null);
+  const [DarkMode, setDarkMode] = useState(false);
+  const [nTokens,setnTokens]=useState(null);
 
+  
+  
   const initConnection = async () => {
     if (typeof window.ethereum !== "undefined") {
       console.log("good");
@@ -63,34 +54,44 @@ function App() {
       });
       const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
       setProvider(tempProvider);
-      console.log(provider);
+      console.log(tempProvider);
       setAccount(accounts[0]);
+
+      const contract = new ethers.Contract(
+        "0x40b15a7dABE9B999EF56D83E991C61994B887532",
+        abi,
+        tempProvider
+      );
+      console.log(contract);
+      const nToken = await contract.balanceOf(accounts[0]);
+
+      console.log(nToken.toString());
+      setnTokens(nToken);
     } else {
       console.log("install metamask");
     }
   };
+  const handleMode =()=>{
+    setDarkMode(!DarkMode)
+  }
 
   useEffect(() => {
     initConnection();
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box className="App" sx={{backgroundImage:`url(${imageBackground})`,backgroundAttachment: "fixed"}}>
-        <Navbar initConnection={initConnection} account={account} />
-        <Entrance />
-        <Toolbar
-          sx={{
-            background: "linear-gradient(to right bottom,#5e0055, #20005e)",
-            boxShadow: 2,
-          }}
-        ></Toolbar>
-        <History />
+    <ThemeProvider theme={DarkMode? themeLight:themeDark}>
+            <CssBaseline />      
+      <Box className="App" >
+        <Navbar initConnection={initConnection} account={account} handleMode={handleMode} DarkMode={DarkMode} provider={provider} nTokens={nTokens}/>
+        <Entrance DarkMode={DarkMode}/>
+
+        <History DarkMode={DarkMode}/>
         <div id="lottery">
-        <Lottery  account={account} provider={provider} />
+        <Lottery  account={account} provider={provider}DarkMode={DarkMode} />
         </div>
-        <Results account={account} provider={provider} />
-        <Footer />
+        <Results account={account} provider={provider}DarkMode={DarkMode} />
+        <Footer DarkMode={DarkMode}/>
       </Box>
     </ThemeProvider>
   );

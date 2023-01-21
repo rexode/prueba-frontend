@@ -3,9 +3,18 @@ import React from "react";
 import {Celebration} from "@mui/icons-material";
 import { Typography,Card, Grid, CardMedia } from "@mui/material";
 import logo from "../assets/logo.jpg"
-export default function History() {
+import {BotonPersonalizado,themeDark,themeLight} from "./Themes"
+import { styled,CssBaseline } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+export default function History(props) {
+  const {DarkMode} = props;
+
     return (
-      <Box style={{ background: "linear-gradient(to right bottom,#37005b, #20005e)" }}>
+      <ThemeProvider theme={DarkMode? themeLight:themeDark}>
+      <CssBaseline />  
+
+      <Box style={{  }}>
         <Grid
           container
           spacing={2}
@@ -20,8 +29,8 @@ export default function History() {
           </Grid>
           <Grid item xs={12} md={6}>
             <Box sx={{ p: 4 }}>
-              <Typography variant="h2" sx={{color:"white"}}>Who are we?</Typography>
-              <Typography variant="h6" sx={{color:"white"}}>
+              <Typography variant="h2" color="primary">Who are we?</Typography>
+              <Typography variant="h6" color="primary">
                 pepe ipsum dolor sit amet consectetur adipiscing, elit himenaeos
                 praesent senectus natoque litora condimentum, montes neque
                 molestie potenti egestas. Dignissim iaculis dapibus suspendisse
@@ -39,6 +48,7 @@ export default function History() {
           </Grid>
         </Grid>
       </Box>
+      </ThemeProvider>
     );
 
 }

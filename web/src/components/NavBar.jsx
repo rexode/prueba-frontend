@@ -12,9 +12,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  
+  Switch
 } from "@mui/material";
-import { styled } from "@mui/material";
+import { styled,createTheme ,CssBaseline} from "@mui/material";
 import {
   Celebration,
   Twitter,
@@ -22,39 +22,49 @@ import {
   LocalActivity,
   Menu,
   AcUnit,
-  AirlineSeatFlat,
+  AirlineSeatFlat, 
 } from "@mui/icons-material";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
+import abi from "../abi/abiToken.json";
 
 import { Box } from "@mui/system";
 import React from "react";
 import App from "../App";
 import { Link } from "react-scroll";
+import { red } from "@mui/material/colors";
+import { ThemeProvider } from "styled-components";
+import {themeDark,themeLight} from "./Themes"
 
 const NavbarPersonalizada = styled(AppBar)({
   color: "white",
   background: "rgba(0,0,0,0.0)",
 });
 
-export default function Navbar(props) {
-  const [provider, setProvider] = useState(null);
-  const { initConnection, account } = props;
 
+
+export default function Navbar(props) {
+  const { initConnection, account,handleMode ,DarkMode,provider,nTokens} = props;
+  let nTokensFixed= nTokens==null?(0):((nTokens/10**18).toFixed(2).toString())
   const DrawerComponent = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     return (
-      <>
-        <Drawer
+      <ThemeProvider theme={DarkMode? themeLight:themeDark}>
+      <CssBaseline />      
+      <Drawer
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
           PaperProps={{
-            sx: {
-              background: "linear-gradient(to right bottom,#5e0055, #20005e)",
-              color: "white",
-            },
+            
           }}
         >
+          <Typography sx={{marginLeft:5}}>DarkMode<Switch onChange={handleMode} color="primary"/></Typography>
+          
+          {nTokens==null?(
+                  <Typography fontSize={16}>Log-in first</Typography>
+                ):(
+                  <Typography fontSize={16} sx={{marginRight:5}}>{nTokensFixed} $CLT</Typography>
+                )}
           <List>
             {["Twitter", "Whitepaper", "Lottery"].map((text, index) => (
               <ListItem key={text} disablePadding>
@@ -63,7 +73,7 @@ export default function Navbar(props) {
                     {index == 0 ? (
                       <Button
                         disableElevation
-                        href="https://Twitter.com"
+                        href="https://twitter.com/criptoluckyreal"
                         sx={{ color: "white", m: 3 }}
                       >
                         <Twitter />
@@ -76,7 +86,7 @@ export default function Navbar(props) {
                         {index == 1 ? (
                           <Button
                             disableElevation
-                            href="https://Twitter.com"
+                            href="https://twitter.com/criptoluckyreal"
                             sx={{ color: "white", m: 3 }}
                           >
                         <Attachment />
@@ -88,7 +98,7 @@ export default function Navbar(props) {
                         ) : (
                           <Button
                             disableElevation
-                            href="https://Twitter.com"
+                            href="https://twitter.com/criptoluckyreal"
                             sx={{ color: "white", m: 3 }}
                           >
                         <Celebration/>
@@ -113,7 +123,7 @@ export default function Navbar(props) {
         <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
           <Menu sx={{ color: "white" }} />
         </IconButton>
-      </>
+      </ThemeProvider>
     );
   };
 
@@ -122,7 +132,8 @@ export default function Navbar(props) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <>
+    <ThemeProvider theme={DarkMode? themeLight:themeDark}>
+      <CssBaseline />  
       {isMobile ? (
         <Box>
           <NavbarPersonalizada elevation={0} position="fixed">
@@ -136,7 +147,9 @@ export default function Navbar(props) {
                   CryptoLucky
                 </Typography>
               </Box>
+
               {account == null ? (
+                
                 <Button
                   disableElevation
                   sx={{ color: "white" }}
@@ -168,6 +181,7 @@ export default function Navbar(props) {
                 >
                   CryptoLucky
                 </Typography>
+                
               </Box>
               <Box
                 sx={{
@@ -179,7 +193,7 @@ export default function Navbar(props) {
               >
                 <Button
                   disableElevation
-                  href="https://Twitter.com"
+                  href="https://twitter.com/criptoluckyreal"
                   sx={{ color: "white", m: 3 }}
                 >
                   <Twitter />
@@ -200,26 +214,36 @@ export default function Navbar(props) {
                     <Typography sx={{ minWidth: 100 }}>To Lottery</Typography>
                   </Link>
                 </Button>
+                
               </Box>
-
+              <Switch onChange={handleMode} color="primary"/>
               {account == null ? (
                 <Button
                   disableElevation
                   sx={{ color: "white" }}
                   onClick={initConnection}
+
                 >
                   <Typography fontSize={16}>Log-in</Typography>
                 </Button>
               ) : (
+                <>
+                {nTokens==null?(
+                  <Typography fontSize={16}>Log-in first</Typography>
+                ):(
+                  <Typography fontSize={16} sx={{marginRight:5}}>{nTokensFixed} $CLT</Typography>
+                )}
+                
                 <Typography>
                   ...{account.substring(account.length - 7)}
                 </Typography>
+                </>
               )}
             </Toolbar>
           </NavbarPersonalizada>
           <Offset />
         </Box>
       )}
-    </>
+    </ThemeProvider>
   );
 }

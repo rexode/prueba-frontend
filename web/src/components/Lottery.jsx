@@ -16,28 +16,14 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Refresh, Add, Remove } from "@mui/icons-material";
-import abi from "../abi/abi.json";
-import { styled } from "@mui/material";
+import abi from "../abi/abiLottery.json";
+import {BotonPersonalizado,themeDark,themeLight} from "./Themes"
+import { styled,CssBaseline } from "@mui/material";
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#757ce8",
-      main: "#4e54c8",
-      dark: "#002884",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ff7961",
-      main: "#a594f9",
-      dark: "pink",
-      contrastText: "#fff",
-    },
-  },
+  
 });
-const TypographyPer = styled(Typography)({
-  color: "white",
-});
+
 
 export default function Lottery(props) {
   const [Nwinners, setNwinners] = useState("Refresh");
@@ -51,7 +37,7 @@ export default function Lottery(props) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [buttonState, setButtonState] = useState("loaded");
   const [active, setActive] = useState(false);
-  const { account, provider } = props;
+  const { account, provider ,DarkMode} = props;
   const [error, setError] = useState("succesfull");
   const [open, setOpen] = useState(false);
   const [Success, setSuccess] = useState(false);
@@ -69,12 +55,7 @@ export default function Lottery(props) {
 
   const Aeth = 10 ** 18;
 
-  const BotonPersonalizado = styled(Button)({
-    color: "white",
-    background: "rgba(0,0,0,0.0)",
-    borderRadius: 50,
-    border: 1,
-  });
+  
 
   const getInfoContract = async () => {
     if (provider == null) {
@@ -83,7 +64,7 @@ export default function Lottery(props) {
     } else {
       setButtonState("loading");
       const contract = new ethers.Contract(
-        "0x98A66BC886cA0B85E8188E2b6191E04DCb7aa31e",
+        "0x4e4f221A11708bB6b9DF9b08a8d5fb2FBeE5f844",
         abi,
         provider
       );
@@ -143,7 +124,9 @@ export default function Lottery(props) {
     }
 
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={DarkMode? themeLight:themeDark}>
+      <CssBaseline />  
+
         {IdGame.toString() === "Refresh" ? (
           <Card
             raised
@@ -167,14 +150,14 @@ export default function Lottery(props) {
               }}
             >
               <Grid item>
-                <TypographyPer variant="h1" sx={{ flexGrow: 1 }}>
+                <Typography variant="h1"color="primary" sx={{ flexGrow: 1 }}>
                   Refresh Data
-                </TypographyPer>
+                </Typography>
               </Grid>
             </Grid>
           </Card>
         ) : (
-          <Card
+          <Card color="primary"
             raised
             sx={{
               width: "50%",
@@ -210,22 +193,22 @@ export default function Lottery(props) {
                       sx={{ m: 1 }}
                     >
                       <Grid item>
-                        <TypographyPer variant="h2">Info</TypographyPer>
+                        <Typography color="primary"variant="h2">Info</Typography>
                       </Grid>
                       <Grid item>
-                        <TypographyPer variant="h5">
+                        <Typography color="primary"variant="h5">
                           ID of the Game: {IdGame}
-                        </TypographyPer>
+                        </Typography>
                       </Grid>
                       <Grid item>
-                        <TypographyPer variant="h5">
+                        <Typography color="primary"variant="h5">
                           Number of Winners: {Nwinners}
-                        </TypographyPer>
+                        </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <TypographyPer variant="h5">
+                        <Typography color="primary"variant="h5">
                           Ticket cost: {CostTicket}Eth
-                        </TypographyPer>
+                        </Typography>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -251,13 +234,13 @@ export default function Lottery(props) {
                       sx={{ m: 1 }}
                     >
                       <Grid item>
-                        <TypographyPer variant="h2">Prizes</TypographyPer>
+                        <Typography color="primary"variant="h2">Prizes</Typography>
                       </Grid>
                       {PrizeWinners.map((winner) => (
                         <Grid item xs={2}>
-                          <TypographyPer color="primary" variant="h5">
+                          <Typography color="primary" variant="h5">
                             {winner}Eth{" "}
-                          </TypographyPer>
+                          </Typography>
                         </Grid>
                       ))}
                     </Grid>
@@ -286,15 +269,15 @@ export default function Lottery(props) {
                         sx={{ m: 1 }}
                       >
                         <Grid item>
-                          <TypographyPer variant="h5">
+                          <Typography color="primary"variant="h5">
                             Tickets left: {TicktetsLeft}
-                          </TypographyPer>
+                          </Typography>
                         </Grid>
                         <Grid item>
-                          <TypographyPer variant="h5">
+                          <Typography color="primary"variant="h5">
                             Tickets already bought: {TotalTicketsUser}/
                             {MaxTicketsPlayers}
-                          </TypographyPer>
+                          </Typography>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -306,7 +289,7 @@ export default function Lottery(props) {
                         rowSpacing={1}
                         sx={{ m: 1 }}
                       >
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={12} lg={6}>
                           <ButtonGroup
                             variant="outlined"
                             aria-label="outlined button group"
@@ -331,17 +314,17 @@ export default function Lottery(props) {
                           </ButtonGroup>
                         </Grid>
 
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={12}lg={6}>
                           <Box sx={{}}>
-                            <BotonPersonalizado
+                            <Button
                               onClick={join}
                               sx={{ border: 3 }}
                             >
-                              <TypographyPer variant="h6">
+                              <Typography sx={{pr:3}}variant="h6">
                                 {" "}
                                 Buy Tickets
-                              </TypographyPer>
-                            </BotonPersonalizado>
+                              </Typography>
+                            </Button>
                           </Box>
                         </Grid>
                       </Grid>
@@ -350,9 +333,9 @@ export default function Lottery(props) {
                 </Grid>
               ) : (
                 <Grid item>
-                  <BotonPersonalizado disabled sx={{ border: 3, marginTop: 2 }}>
-                    <TypographyPer variant="h6"> Lottery ended</TypographyPer>
-                  </BotonPersonalizado>
+                  <Button disabled sx={{ border: 3, marginTop: 2 }}>
+                    <Typography color="primary"variant="h6"> Lottery ended</Typography>
+                  </Button>
                 </Grid>
               )}
             </Grid>
@@ -437,8 +420,10 @@ export default function Lottery(props) {
   };
 
   return (
+    <ThemeProvider theme={DarkMode? themeLight:themeDark}>
+      <CssBaseline /> 
     <Box
-      style={{ background: "linear-gradient(to right top,#37005b, #20005e)" }}
+      style={{ }}
     >
       {open ? (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -471,15 +456,15 @@ export default function Lottery(props) {
         <></>
       )}
       <Box sx={{ pb: 10, pt: 3 }}>
-        <TypographyPer variant="h1">Lottery</TypographyPer>
-        <BotonPersonalizado
+        <Typography color="primary" variant="h1">Lottery</Typography>
+        <Button
           sx={{ marginLeft: 4, border: 3 }}
           onClick={getInfoContract}
           disabled={buttonState === "loading"}
         >
           <Refresh />
           {buttonState === "loaded" ? "Refresh" : "Fetching..."}
-        </BotonPersonalizado>
+        </Button>
         {buttonState === "loaded" ? (
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             {showLottery()}
@@ -489,5 +474,6 @@ export default function Lottery(props) {
         )}
       </Box>
     </Box>
+    </ThemeProvider>
   );
 }
